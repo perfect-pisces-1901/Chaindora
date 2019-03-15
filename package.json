@@ -17,16 +17,19 @@
     "babel-polyfill": "^6.26.0",
     "chalk": "^2.4.2",
     "express": "^4.16.4",
+    "ipfs-api": "^26.1.2",
     "pg": "^7.8.2",
     "pg-hstore": "^2.3.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
+    "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.1.0",
-    "volleyball": "^1.5.1"
+    "volleyball": "^1.5.1",
+    "web3": "^1.0.0-beta.48"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
