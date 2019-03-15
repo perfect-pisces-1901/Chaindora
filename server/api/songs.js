@@ -13,7 +13,8 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newSong = await Song.create(req.body);
+    // TODO - The body is forwarded from an IPFS API response by the seller app. Change the seller app to send a more nicely formatted body.
+    const newSong = await Song.create({hash: req.body[0].hash});
     res.json(newSong);
   } catch (error) {
     next(error);
