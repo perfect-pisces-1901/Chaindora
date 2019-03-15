@@ -9,7 +9,7 @@ const gotSongs = songs => ({
 
 export const getSongs = () => {
   return async dispatch => {
-    const response = await axios.get('http://localhost:8080/api/songs');
+    const response = await axios.get('/api/songs');
     const songs = response.data;
     dispatch(gotSongs(songs));
   };

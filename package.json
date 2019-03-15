@@ -1,23 +1,31 @@
 {
-  "name": "Cap_MVC_Listener_2",
+  "name": "MVC_listener",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
+    "build-watch": "webpack -w",
+    "seed": "node seed.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/preset-env": "^7.3.4",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "chalk": "^2.4.2",
     "express": "^4.16.4",
+    "pg": "^7.8.2",
+    "pg-hstore": "^2.3.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "sequelize": "^5.1.0",
     "volleyball": "^1.5.1"
   },
   "devDependencies": {

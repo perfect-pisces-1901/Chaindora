@@ -8,13 +8,15 @@ class AllSongs extends Component {
   }
   render() {
     const { songs } = this.props;
+    console.log('SONGS:', songs)
     return (
       <div>
         <ul>
-          {songs.map(hash => {
+          {songs.map(song => {
+            const {hash} = song;
             return (
               <li key={hash}>
-                <a href={`https://gateway.ipfs.io/ipfs/${hash}`}>Click to play {hash.slice(0, 5)}...</a>
+                <a href={`https://gateway.ipfs.io/ipfs/${hash}`}>Click to play {hash.slice(0,5)}...</a>
               </li>
             );
           })}
