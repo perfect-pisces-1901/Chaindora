@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "deploy": "script/deploy",
     "start": "node main.js",
     "start-dev": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
     "build-watch": "webpack -w",
-    "seed": "node seed.js",
+    "seed": "node script/seed.js",
     "test": "NODE_ENV=test mocha {server,client}/**/*.test.js --require @babel/polyfill --require @babel/register"
   },
   "keywords": [],

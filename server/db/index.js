@@ -5,7 +5,7 @@ const Sequelize = require('sequelize')
 
 console.log(chalk.yellow('Opening database connection'))
 
-const db = new Sequelize(`postgres://localhost:5432/songStorage`, {
+const db = new Sequelize(process.env.DATABASE_URL || `postgres://localhost:5432/songStorage`, {
   logging: false
 })
 
