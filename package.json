@@ -1,12 +1,13 @@
 {
-  "name": "MVC_listener",
+  "name": "Chaindora",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
     "build-watch": "webpack -w",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "test": "NODE_ENV=test mocha {server,client}/**/*.test.js --require @babel/polyfill --require @babel/register"
   },
   "keywords": [],
   "author": "",
@@ -33,8 +34,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   }
