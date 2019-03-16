@@ -2,7 +2,7 @@
 
 const db = require('./server/db')
 const app = require('./server')
-const PORT = 8080
+const PORT = process.env.PORT
 const {magenta, green} = require('chalk')
 
 db.sync()
