@@ -4,13 +4,19 @@ const Song = require('../server/db/models/Song');
 
 const songs = [
   {
-    hash: '948q3fvytngexmhwhx7fvngomiuhjfa8,yc'
+    title: 'Liquid Eyes',
+    artist: 'Leo LePuq (aka Vivaldi)',
+    hash: 'QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N' // Vivaldi sonata Emin
   },
   {
-    hash: '89mcr4279v4rm67tf3m27x3q9f7hmrt7638'
+    title: 'Fangtime Fantasia (theme from Love Bites)',
+    artist: 'Jamie Masterson (aka Haydn)',
+    hash: 'QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe' // Haydn Cello concerto Dmaj
   },
   {
-    hash: '8j9rvjepw8jnc837rfhmx378rhmx82f9req'
+    title: 'Baby, You Float My Duck',
+    artist: 'Big Daddy Lobo Martinez (aka tschaikovsky)',
+    hash: 'QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi' // Tschaikovsky Rococco Variations
   }
 ]
 
