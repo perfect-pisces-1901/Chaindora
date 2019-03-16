@@ -17,8 +17,8 @@ to bypass the hash. This project is just a sketch-of-concept!
 
 ## Installation
 
-  npm install
-  npm run seed
-  npm start
+  - npm install
+  - npm run seed
+  - npm start
 
 Etc.
