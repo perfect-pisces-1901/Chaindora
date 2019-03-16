@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getSongs } from '../reducers/songsReducer';
 import { connect } from 'react-redux';
+import Song from './Song.js'
 
 class AllSongs extends Component {
   componentDidMount() {
@@ -8,15 +9,13 @@ class AllSongs extends Component {
   }
   render() {
     const { songs } = this.props;
-    console.log('SONGS:', songs)
     return (
       <div>
         <ul>
           {songs.map(song => {
-            const {hash} = song;
             return (
-              <li key={hash}>
-                <a href={`https://gateway.ipfs.io/ipfs/${hash}`}>Click to play {hash.slice(0,5)}...</a>
+              <li key={song.hash}>
+                <Song song={song} />
               </li>
             );
           })}
