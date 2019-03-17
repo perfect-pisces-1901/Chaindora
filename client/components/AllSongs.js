@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Song from './Song.js'
 
 const audio = document.createElement('audio');
+let audioVisible = false;
 
 class AllSongs extends Component {
   constructor(props) {
@@ -20,6 +21,11 @@ class AllSongs extends Component {
   }
 
   togglePlay(ev, song, uri) {
+    if (!audioVisible) {
+      audioVisible = true
+      document.getElementsByTagName('body')[0].appendChild(audio)
+      audio.controls = true
+    }
     if (this.state.currentSong.id && (this.state.currentSong.id === song.id)) {
       if (audio.paused) {
         audio.play();
