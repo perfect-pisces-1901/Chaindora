@@ -9,21 +9,31 @@ class AllSongs extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentSong: {}
+      currentSong: {},
+      paused: false
     }
-    this.playSong = this.playSong.bind(this)
+    this.togglePlay = this.togglePlay.bind(this)
   }
 
   componentDidMount() {
     this.props.getSongs();
   }
 
-  playSong(ev, song, uri) {
-    console.log('play song ', uri, song, ev)
-    this.setState({ currentSong: song })
-    audio.src = uri
-    audio.load();
-    audio.play();
+  togglePlay(ev, song, uri) {
+    if (this.state.currentSong.id && (this.state.currentSong.id === song.id)) {
+      if (audio.paused) {
+        audio.play();
+        this.setState({ paused: false })
+      } else {
+        audio.pause();
+        this.setState({ paused: true })
+      }
+    } else {
+      audio.src = uri
+      audio.load();
+      audio.play();
+      this.setState({ currentSong: song, paused: false })
+    }
   }
 
   render() {
@@ -43,8 +53,10 @@ class AllSongs extends Component {
                   <Song
                     key={song.hash}
                     song={song}
-                    playSong={this.playSong}
-                    currentSong={this.state.currentSong} />
+                    togglePlay={this.togglePlay}
+                    currentSong={this.state.currentSong}
+                    paused={this.state.paused}
+                  />
                 )})
             }
           </tbody>

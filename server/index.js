@@ -8,7 +8,9 @@ app.use(volleyball);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'node_modules', 'font-awesome', 'css')))
+app.use('/fonts', express.static(path.join(__dirname, '..', 'node_modules', 'font-awesome', 'fonts')))
 
 app.use(function (req, res, next) {
   // CORS headers
