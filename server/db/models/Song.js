@@ -10,6 +10,10 @@ const Song = db.define('song', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  genre: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   hash: {
     type: Sequelize.STRING,
     allowNull: false
@@ -17,3 +21,4 @@ const Song = db.define('song', {
 })
 
 module.exports = Song;
+

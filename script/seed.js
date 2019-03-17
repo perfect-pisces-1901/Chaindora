@@ -6,16 +6,19 @@ const songs = [
   {
     title: 'Liquid Eyes',
     artist: 'Leo LePuq (aka Vivaldi)',
+    genre: 'Classical',
     hash: 'QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N' // Vivaldi sonata Emin
   },
   {
     title: 'Fangtime Fantasia (theme from Love Bites)',
     artist: 'Jamie Masterson (aka Haydn)',
+    genre: 'Classical',
     hash: 'QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe' // Haydn Cello concerto Dmaj
   },
   {
     title: 'Baby, You Float My Duck',
     artist: 'Big Daddy Lobo Martinez (aka tschaikovsky)',
+    genre: 'Classical',
     hash: 'QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi' // Tschaikovsky Rococco Variations
   }
 ]
