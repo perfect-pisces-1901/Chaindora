@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - node
+services:
+  - postgresql
+addons:
+  postgresql: '9.6'
+dist: trusty
+sudo: false
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+install:
+  - npm ci
+before_script:
+  - psql -c 'create database "chaindora-test";' -U postgres
+
+# before_deploy:
+#   - npm run build-client # make the bundle
+#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
+# deploy:
+#   skip_cleanup: true # prevents travis from deleting the build
+#   provider: heroku
+#   app: YOUR-HEROKU-APP-NAME-HERE # see README
+#   api_key:
+#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE
