@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build-client": "webpack -p",
     "deploy": "script/deploy",
     "start": "node main.js",
     "start-dev": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
