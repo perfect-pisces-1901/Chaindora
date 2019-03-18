@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { login } from "../reducers/users";
-import LoginForm from "./LoginForm";
+import LoginForm from "./AuthForm";
 
 const Login = props => {
   const { handleSubmit } = props;

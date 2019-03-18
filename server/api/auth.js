@@ -1,44 +1,12 @@
 const router = require("express").Router();
-const User = require("../db/models/User");
-
+const User = require("../db/models/user");
 module.exports = router;
-
-router.get("/me", (req, res, next) => {
-  if (!req.session.userId) {
-    userNotFound(next);
-  } else {
-    User.findById(req.session.userId)
-      .then(user => (user ? res.json(user) : userNotFound(next)))
-      .catch(next);
-  }
-});
-
-// router.put("/login", (req, res, next) => {
-//   User.findOne({
-//     where: {
-//       email: req.body.email,
-//       password: req.body.password
-//     }
-//   })
-//     .then(user => {
-//       if (user) {
-//         req.session.userId = user.id;
-//         res.json(user);
-//       } else {
-//         console.log(req.body.email, "$$$$$$");
-//         console.log(req.body.password, "****");
-//         const err = new Error("Incorrect email or password!");
-//         err.status = 401;
-//         next(err);
-//       }
-//     })
-//     .catch(next);
-// });
 
 router.post("/login", async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { email: req.body.email } });
-    console.log(req.body.email, "$$$$$$$$");
+    console.log(req.body.email, "*****");
+    console.log(req.body.password, "$$$$$");
     if (!user) {
       console.log("No such user found:", req.body.email);
       res.status(401).send("Wrong username and/or password");
@@ -71,3 +39,9 @@ router.post("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
+
+router.get("/me", (req, res) => {
+  res.json(req.user);
+});
+
+// router.use('/google', require('./google'))
