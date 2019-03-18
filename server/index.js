@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const volleyball = require("volleyball");
 const path = require("path");
+const passport = require("passport");
 
 app.use(volleyball);
 
@@ -38,6 +39,20 @@ app.use(function(req, res, next) {
   // }
 
   return next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => done(null, user.id));
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.models.user.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 app.use(express.static(path.join(__dirname, "..", "public")));

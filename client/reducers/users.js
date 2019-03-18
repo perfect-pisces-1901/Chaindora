@@ -21,7 +21,7 @@ export const getMe = () => dispatch => {
 
 export const login = formData => dispatch => {
   return axios
-    .put("/auth/login", formData)
+    .post("/auth/login", formData)
     .then(res => res.data)
     .then(user => dispatch(getUser(user)))
     .catch(console.error.bind(console));

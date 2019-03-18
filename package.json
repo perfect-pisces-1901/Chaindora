@@ -22,6 +22,7 @@
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
     "ipfs-api": "^26.1.2",
+    "passport": "^0.4.0",
     "pg": "^7.8.2",
     "pg-hstore": "^2.3.2",
     "react": "^16.8.4",
