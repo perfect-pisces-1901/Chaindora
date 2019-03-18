@@ -13,12 +13,15 @@ class ArtistUpload extends Component {
       buffer: "",
       ethAddress: "",
       transactionHash: "",
-      txReceipt: ""
+      txReceipt: "",
+      songName: "",
+      genre: ""
     };
     this.captureFile = this.captureFile.bind(this);
     this.convertToBuffer = this.convertToBuffer.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   //Take file input from user
   captureFile(event) {
@@ -31,12 +34,9 @@ class ArtistUpload extends Component {
   }
   //Convert the file to buffer to store on IPFS
   async convertToBuffer(reader) {
-    //file is converted to a buffer for upload to IPFS
     const buffer = await Buffer.from(reader.result);
-    //set this buffer-using es6 syntax
     this.setState({ buffer });
   }
-  //ES6 async function
   async onClick() {
     try {
       this.setState({ blockNumber: "waiting.." });
@@ -44,7 +44,7 @@ class ArtistUpload extends Component {
       await web3.eth.getTransactionReceipt(
         this.state.transactionHash,
         (err, txReceipt) => {
-          console.log(err, txReceipt);
+          // console.log(err, txReceipt);
           this.setState({ txReceipt });
         }
       );
@@ -53,36 +53,34 @@ class ArtistUpload extends Component {
     }
   }
 
+  onChange (event) {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
   async onSubmit(event) {
     // storehash.options.address =
     //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
     event.preventDefault();
-    //bring in user's metamask account address
     const accounts = await web3.eth.getAccounts();
-    //obtain contract address from storehash.js
     const ethAddress = await storehash.options.address;
     this.setState({ ethAddress });
-    console.log(this.state.ethAddress, "*******");
-    //save document to IPFS,return its hash#, and set hash# to state
-    await ipfs.add(this.state.buffer, (err, ipfsHash) => {
+    // eslint-disable-next-line handle-callback-err
+    await ipfs.add(this.state.buffer, async (err, ipfsHash) => {
       // console.log(err, ipfsHash);
-      //setState by setting ipfsHash to ipfsHash[0].hash
       this.setState({ ipfsHash: ipfsHash[0].hash });
-      // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract
-      //return the transaction hash from the ethereum contract
-
       storehash.methods.setHash(this.state.ipfsHash).send(
         {
           from: accounts[0]
         },
         (error, transactionHash) => {
-          console.log(transactionHash);
+          // console.log(transactionHash);
           this.setState({ transactionHash });
         }
       );
-      axios.post(`/api/songs`, ipfsHash).then(res => {
-        console.log("axios res", res);
-        console.log("axios res.data", res.data);
+      const song = {ipfsHash, title: this.state.songName, genre: this.state.genre}
+      await axios.post(`/api/songs`, song).then(res => {
+        // console.log("axios res", res);
+        // console.log("axios res.data", res.data);
       });
     });
   }
@@ -93,10 +91,18 @@ class ArtistUpload extends Component {
           <h1>Ethereum and IPFS using Infura</h1>
         </header>
         <hr />
-        <grid>
+        <div>
           <h3> Choose file to send to IPFS </h3>
           <form onSubmit={this.onSubmit}>
             <input type="file" onChange={this.captureFile} />
+            <label>
+              Song Name:
+              <input type='text' name='songName' value={this.state.songName} onChange={this.onChange} required />
+            </label>
+            <label>
+              Genre:
+              <input type='text' name='genre' value={this.state.genre} onChange={this.onChange} required />
+            </label>
             <Button bsstyle="primary" type="submit">
               Send it
             </Button>
@@ -130,7 +136,7 @@ class ArtistUpload extends Component {
               </tr>
             </tbody>
           </table>
-        </grid>
+        </div>
       </div>
     );
   }
