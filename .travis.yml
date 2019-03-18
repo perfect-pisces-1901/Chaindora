@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - node
+services:
+  - postgresql
+addons:
+  postgresql: '9.6'
+dist: trusty
+sudo: false
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+install:
+  - npm ci
+before_script:
+  - psql -c 'create database "chaindora-test";' -U postgres
+
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: chaindora
+  api_key:
+    secure: "M9uZHVkCP8ng61CBBE+bUqGFCoDVgf+q9uEXSzCQaksbf9BWxwQTQyBIuTL1BOTH/PBp7sV9d5ox/Hthdi4/qblj1oDOwNENvWq8d1ifepIEhK0QUzYxR672GUMFnYgZwLluDRlnn7toeqmLD7G5PrGLsYBM4BusxkijazCGfIrgnKhXTVR4c1AGv0i9v6PuVWbvnyc5nS51GrfO5QMF73T1b6AAVHOunU4991EshiHv4M/d3xAqcm/axwCBZU+HtyB6VYN7cIyKEg1/b9l3mB5wl2SvhQYGN9vYxY9rNJPQzT2TXuUxHzk870W247km7SlbD/a8pimf1+CK0vVRykqLbkXJa5mtJnuLNy3dTBeaN53jS033vFr7IrCUHxkfCMdVXf4ozIz///7H+X9+XHYfL3+QoVS49wAQubPtF6W2QafiLchhSfiyNA7RL0Y6fKf/kWtnx5TAGY0Eg35dtyj99MbMw4Lmrd3jjfuhdoMPTyEcZrBZNeMs/9jjxsOAquj9Y6dSRtkqD0c1OGxfaqL/znFHC89LoJOpIGHs2skDlRhM6d0M2Ccw7LKqWXQUGg1FC+3rCsUSGRMEf8OUQtZe8rRbdh2aPyUb+0DeEeRSonTbUE3pgYcRps0yPtiKvRUZfp2+5N2O/fhfxS9fYXxVlRVDOZtpiftDVENC3zQ="

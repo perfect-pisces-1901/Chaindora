@@ -45,6 +45,7 @@ class AllSongs extends Component {
   render() {
     return (
       <div>
+        <h1>Chaindora Catalog</h1>
         <table id="songs">
           <tbody>
             <tr>
