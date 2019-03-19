@@ -36,7 +36,6 @@ class ArtistUpload extends Component {
     //set this buffer-using es6 syntax
     this.setState({ buffer });
   }
-
   //ES6 async function
   async onClick() {
     try {

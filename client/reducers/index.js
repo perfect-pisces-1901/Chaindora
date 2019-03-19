@@ -1,8 +1,6 @@
-import { combineReducers } from "redux";
-import songs from "./songsReducer";
-import users from "./users";
+import { combineReducers } from 'redux';
+import songs from './songsReducer';
 
 export default combineReducers({
   songs,
-  users
 });
