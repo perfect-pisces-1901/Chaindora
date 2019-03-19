@@ -4,7 +4,7 @@
 
 Chaindora is a music streaming service that benefits creators
 by storing track ownership and streaming revenue payout arrangements
-in a smart contract on the Ethereum blockchain.
+in a smart contract on the Etherium blockchain.
 
 Chaindora works as a conventional streaming service for listeners
 (who can pay by track or by subscription). For creators, it hosts
@@ -17,8 +17,8 @@ to bypass the hash. This project is just a sketch-of-concept!
 
 ## Installation
 
-- npm install
-- npm run seed
-- npm start
+  - npm install
+  - npm run seed
+  - npm start
 
 Etc.
