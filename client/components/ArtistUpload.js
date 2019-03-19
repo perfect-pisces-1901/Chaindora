@@ -2,8 +2,36 @@ import React, { Component } from "react";
 import web3 from "../../src/web3";
 import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
-import { Button } from "reactstrap";
+// import { Button } from "reactstrap";
 import axios from "axios";
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import {withStyles} from '@material-ui/core/styles'
+// import Typography from '@material-ui/core/Typography'
+
+const buttonStyle = {
+  background: 'linear-gradient(45deg, #FF8E53 30%, #00A0EE 90%)',
+  borderRadius: 3,
+  border: 0,
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+};
+// const buttonStyle = withStyles({
+//   root: {
+//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//     borderRadius: 3,
+//     border: 0,
+//     color: 'white',
+//     height: 48,
+//     padding: '0 30px',
+//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//   },
+//   label: {
+//     textTransform: 'capitalize'
+//   }
+// })(Button);
 
 class ArtistUpload extends Component {
   constructor() {
@@ -27,8 +55,11 @@ class ArtistUpload extends Component {
   captureFile(event) {
     event.stopPropagation();
     event.preventDefault();
+    console.log('FILES ARE: ', event.target.files)
     const file = event.target.files[0];
+    console.log('FILE IS: ', file)
     let reader = new window.FileReader();
+    console.log('READER IS: ', reader)
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => this.convertToBuffer(reader);
   }
@@ -78,37 +109,39 @@ class ArtistUpload extends Component {
         }
       );
       const song = {ipfsHash, title: this.state.songName, genre: this.state.genre}
-      await axios.post(`/api/songs`, song).then(res => {
-        // console.log("axios res", res);
-        // console.log("axios res.data", res.data);
-      });
+      await axios.post(`/api/songs`, song);
     });
   }
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Ethereum and IPFS using Infura</h1>
+          <h1 align='center' color='secondary'>Your Chaindora Studio</h1>
         </header>
         <hr />
         <div>
-          <h3> Choose file to send to IPFS </h3>
+          <h3> Upload your songs here: </h3>
           <form onSubmit={this.onSubmit}>
-            <input type="file" onChange={this.captureFile} />
-            <label>
-              Song Name:
-              <input type='text' name='songName' value={this.state.songName} onChange={this.onChange} required />
+            <br/>
+              <TextField type='text' name='songName' value={this.state.songName} placeholder='Title' onChange={this.onChange} required />
+            <br/>
+              <TextField type='text' name='genre' value={this.state.genre} placeholder='Genre' onChange={this.onChange} required />
+            <br/>
+            <input id='uploadSong' type="file" style={{display: 'none'}} onChange={this.captureFile} />
+            <label htmlFor='uploadSong'>
+              <Button style={buttonStyle} component='span'>Upload Song</Button>
             </label>
-            <label>
-              Genre:
-              <input type='text' name='genre' value={this.state.genre} onChange={this.onChange} required />
+            <input id='uploadAlbumArtwork' type="file" style={{display: 'none'}} onChange={this.captureFile} />
+            <label htmlFor='uploadAlbumArtwork'>
+              <Button style={buttonStyle} component='span'>Upload Album Artwork</Button>
             </label>
+            <br/>
             <Button bsstyle="primary" type="submit">
               Send it
             </Button>
           </form>
           <hr />
-          <Button onClick={this.onClick}> Get Transaction Receipt </Button>
+          <Button style={buttonStyle} onClick={this.onClick}> Get Transaction Receipt </Button>
           <hr />
           <table bordered="true" responsive="true">
             <thead>

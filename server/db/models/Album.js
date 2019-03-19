@@ -8,7 +8,7 @@ const Album = db.define('album', {
   },
   imageUrl: {
     type: Sequelize.TEXT,
-    defaultImage: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg'
+    defaultValue: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg'
   }
 })
 
