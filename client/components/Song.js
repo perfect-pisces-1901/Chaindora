@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 export default function Song(props) {
   const song = props.song
@@ -14,9 +15,11 @@ export default function Song(props) {
       <td>
         {
           (currentSong.hash !== hash || paused) ?
-            <i className="fa fa-play-circle" onClick={(ev) => togglePlay(ev, song, uri)} />
+
+            <Button type="primary" shape="circle" icon="caret-right" onClick={(ev) => togglePlay(ev, song, uri)} />
           :
-            <i className="fa fa-pause-circle" onClick={(ev) => togglePlay(ev, song, uri)} />
+            <Button type="primary" shape="circle" icon="pause" onClick={(ev) => togglePlay(ev, song, uri)} />
+
         }
       </td>
       <td>{title}</td>

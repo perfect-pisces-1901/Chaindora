@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { getSongs } from '../reducers/songsReducer';
 import { connect } from 'react-redux';
 import Song from './Song.js'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const audio = document.createElement('audio');
 let audioVisible = false;
@@ -48,11 +51,11 @@ class AllSongs extends Component {
         <h1>Chaindora Catalog</h1>
         <table id="songs">
           <tbody>
-            <tr>
-              <td />
-              <td>Title</td>
-              <td>Artist</td>
-              <td>Hash</td>
+            <tr id="titles">
+              <th />
+              <th>Title</th>
+              <th>Artist</th>
+              <th>Hash</th>
             </tr>
             {
               this.props.songs.map(song => {
