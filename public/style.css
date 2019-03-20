@@ -82,3 +82,26 @@ i.anticon.anticon {
 audio {
   height: 0px;
 }
+/* 
+#main {
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+  width: 250px;
+  margin-left: 18em;
+}
+
+div#signUp {
+  display: flex;
+  flex-direction: column;
+}
+
+#login {
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+} */

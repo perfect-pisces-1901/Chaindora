@@ -17,7 +17,7 @@ const AuthForm = props => {
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
         <h1 className="title">Please {displayName}</h1>
         {displayName === "Login" ? (
-          <div>
+          <div style="display:flex; flex-direction:column">
             <TextField
               required
               type="text"
@@ -36,7 +36,7 @@ const AuthForm = props => {
             />
           </div>
         ) : (
-          <div>
+          <div style="display: flex; flex-direction: column">
             <TextField
               required
               type="text"
@@ -74,7 +74,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <Button type="submit" variant="outlined" color="secondary">
+      <Button type="submit" variant="outlined" color="secondary" style="">
         <a href="/auth/google">{displayName} with Google</a>
       </Button>
     </div>

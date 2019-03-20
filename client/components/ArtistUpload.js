@@ -4,7 +4,7 @@ import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
 import { Button } from "reactstrap";
 import axios from "axios";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 
 class ArtistUpload extends Component {
   constructor() {
@@ -12,7 +12,8 @@ class ArtistUpload extends Component {
     this.state = {
       songTitle: "",
       genre: "",
-      imageUrl: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg',
+      imageUrl:
+        "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
       ipfsHash: null,
       buffer: "",
       ethAddress: "",
@@ -60,7 +61,7 @@ class ArtistUpload extends Component {
   async handleChange(event) {
     event.preventDefault();
     await this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   }
 
@@ -70,6 +71,7 @@ class ArtistUpload extends Component {
     event.preventDefault();
     //bring in user's metamask account address
     const accounts = await web3.eth.getAccounts();
+    console.log(accounts, "metamask");
     //obtain contract address from storehash.js
     const ethAddress = await storehash.options.address;
     this.setState({ ethAddress });
@@ -103,35 +105,35 @@ class ArtistUpload extends Component {
         <div>
           <div id="formbox">
             <div>
-            <h2>Upload your audio here:</h2>
-            <div>
-            <form onSubmit={this.onSubmit}>
-              <TextField
-                required
-                type="text"
-                name="songTitle"
-                id="standard-name"
-                label="Song Title"
-                margin="normal"
-                onChange={this.handleChange}
-              />
-              <br/>
-              <TextField
-                required
-                type="text"
-                name="genre"
-                id="standard-name"
-                label="Genre"
-                margin="normal"
-                onChange={this.handleChange}
-              />
-              <br/>
-              <input type="file" onChange={this.captureFile} />
-              <Button bsstyle="primary" type="submit">
-                Send it
-              </Button>
-            </form>
-            </div>
+              <h2>Upload your audio here:</h2>
+              <div>
+                <form onSubmit={this.onSubmit}>
+                  <TextField
+                    required
+                    type="text"
+                    name="songTitle"
+                    id="standard-name"
+                    label="Song Title"
+                    margin="normal"
+                    onChange={this.handleChange}
+                  />
+                  <br />
+                  <TextField
+                    required
+                    type="text"
+                    name="genre"
+                    id="standard-name"
+                    label="Genre"
+                    margin="normal"
+                    onChange={this.handleChange}
+                  />
+                  <br />
+                  <input type="file" onChange={this.captureFile} />
+                  <Button bsstyle="primary" type="submit">
+                    Send it
+                  </Button>
+                </form>
+              </div>
             </div>
             <div>
               <p>Cover Art Preview</p>
