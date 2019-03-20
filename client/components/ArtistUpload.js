@@ -2,9 +2,36 @@ import React, { Component } from "react";
 import web3 from "../../src/web3";
 import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
-import { Button } from "reactstrap";
+// import { Button } from "reactstrap";
 import axios from "axios";
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+// import Typography from '@material-ui/core/Typography'
+
+const buttonStyle = {
+  background: "linear-gradient(45deg, #FF8E53 30%, #00A0EE 90%)",
+  borderRadius: 3,
+  border: 0,
+  color: "white",
+  height: 48,
+  padding: "0 30px",
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
+};
+// const buttonStyle = withStyles({
+//   root: {
+//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//     borderRadius: 3,
+//     border: 0,
+//     color: 'white',
+//     height: 48,
+//     padding: '0 30px',
+//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//   },
+//   label: {
+//     textTransform: 'capitalize'
+//   }
+// })(Button);
 
 class ArtistUpload extends Component {
   constructor() {
@@ -18,30 +45,33 @@ class ArtistUpload extends Component {
       buffer: "",
       ethAddress: "",
       transactionHash: "",
-      txReceipt: ""
+      txReceipt: "",
+      songName: "",
+      genre: ""
     };
     this.captureFile = this.captureFile.bind(this);
     this.convertToBuffer = this.convertToBuffer.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   //Take file input from user
   captureFile(event) {
     event.stopPropagation();
     event.preventDefault();
+    console.log("FILES ARE: ", event.target.files);
     const file = event.target.files[0];
+    console.log("FILE IS: ", file);
     let reader = new window.FileReader();
+    console.log("READER IS: ", reader);
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => this.convertToBuffer(reader);
   }
   //Convert the file to buffer to store on IPFS
   async convertToBuffer(reader) {
-    //file is converted to a buffer for upload to IPFS
     const buffer = await Buffer.from(reader.result);
-    //set this buffer-using es6 syntax
     this.setState({ buffer });
   }
-  //ES6 async function
   async onClick() {
     try {
       this.setState({ blockNumber: "waiting.." });
@@ -49,7 +79,7 @@ class ArtistUpload extends Component {
       await web3.eth.getTransactionReceipt(
         this.state.transactionHash,
         (err, txReceipt) => {
-          console.log(err, txReceipt);
+          // console.log(err, txReceipt);
           this.setState({ txReceipt });
         }
       );
@@ -58,7 +88,7 @@ class ArtistUpload extends Component {
     }
   }
 
-  async handleChange(event) {
+  async onChange(event) {
     event.preventDefault();
     await this.setState({
       [event.target.name]: event.target.value
@@ -69,79 +99,104 @@ class ArtistUpload extends Component {
     // storehash.options.address =
     //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
     event.preventDefault();
-    //bring in user's metamask account address
     const accounts = await web3.eth.getAccounts();
     console.log(accounts, "metamask");
     //obtain contract address from storehash.js
     const ethAddress = await storehash.options.address;
     this.setState({ ethAddress });
-    console.log(this.state.ethAddress, "*******");
-    //save document to IPFS,return its hash#, and set hash# to state
-    await ipfs.add(this.state.buffer, (err, ipfsHash) => {
+    // eslint-disable-next-line handle-callback-err
+    await ipfs.add(this.state.buffer, async (err, ipfsHash) => {
       // console.log(err, ipfsHash);
-      //setState by setting ipfsHash to ipfsHash[0].hash
       this.setState({ ipfsHash: ipfsHash[0].hash });
-      // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract
-      //return the transaction hash from the ethereum contract
-
       storehash.methods.setHash(this.state.ipfsHash).send(
         {
           from: accounts[0]
         },
         (error, transactionHash) => {
-          console.log(transactionHash);
+          // console.log(transactionHash);
           this.setState({ transactionHash });
         }
       );
-      axios.post(`/api/songs`, ipfsHash).then(res => {
-        console.log("axios res", res);
-        console.log("axios res.data", res.data);
-      });
+      const song = {
+        ipfsHash,
+        title: this.state.songName,
+        genre: this.state.genre
+      };
+      await axios.post(`/api/songs`, song);
     });
   }
   render() {
     return (
       <div className="App">
-        <div>
+        <div id="artistform">
           <div id="formbox">
-            <div>
-              <h2>Upload your audio here:</h2>
+            <div id="formupload">
               <div>
-                <form onSubmit={this.onSubmit}>
-                  <TextField
-                    required
-                    type="text"
-                    name="songTitle"
-                    id="standard-name"
-                    label="Song Title"
-                    margin="normal"
-                    onChange={this.handleChange}
-                  />
-                  <br />
-                  <TextField
-                    required
-                    type="text"
-                    name="genre"
-                    id="standard-name"
-                    label="Genre"
-                    margin="normal"
-                    onChange={this.handleChange}
-                  />
-                  <br />
-                  <input type="file" onChange={this.captureFile} />
-                  <Button bsstyle="primary" type="submit">
-                    Send it
-                  </Button>
-                </form>
+                <h2>Upload your songs here:</h2>
+                <div>
+                  <form onSubmit={this.onSubmit}>
+                    <TextField
+                      required
+                      type="text"
+                      name="songTitle"
+                      id="standard-name"
+                      label="Song Title"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <br />
+                    <TextField
+                      required
+                      type="text"
+                      name="genre"
+                      id="standard-name"
+                      label="Genre"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <br />
+                    <div>
+                      <input
+                        id="uploadSong"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={this.captureFile}
+                      />
+                      <label htmlFor="uploadSong">
+                        <Button style={buttonStyle} component="span">
+                          Upload Song
+                        </Button>
+                      </label>
+                      <br />
+                      <input
+                        id="uploadAlbumArtwork"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={this.captureFile}
+                      />
+                      <label htmlFor="uploadAlbumArtwork">
+                        <Button style={buttonStyle} component="span">
+                          Upload Album Artwork
+                        </Button>
+                      </label>
+                    </div>
+                    <Button bsstyle="primary" type="submit">
+                      Send it
+                    </Button>
+                  </form>
+                </div>
               </div>
             </div>
-            <div>
+            <div id="formcoverart">
               <p>Cover Art Preview</p>
               <img src={this.state.imageUrl} />
             </div>
           </div>
           <hr />
-          <Button onClick={this.onClick}> Get Transaction Receipt </Button>
+          <Button style={buttonStyle} onClick={this.onClick}>
+            {" "}
+            Get Transaction Receipt{" "}
+          </Button>
           <hr />
           <table bordered="true" responsive="true">
             <thead>
