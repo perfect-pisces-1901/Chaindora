@@ -11,6 +11,12 @@ export default function Song(props) {
   const artist = song.artist
   const hash = song.hash
   const uri = `https://gateway.ipfs.io/ipfs/${hash}`
+  const secondsToMMSS = (seconds) => {
+    seconds = +seconds
+    const mm = Math.floor(seconds / 60)
+    const ss = ('00' + (seconds % 60)).slice(-2)
+    return (seconds < 60) ? `00:${ss}` : `${mm}:${ss}`
+  }
   return (
     <tr>
       <td>
@@ -25,10 +31,10 @@ export default function Song(props) {
       <td>{artist}</td>
       <td className="player_controls">
         <span style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}>
-          { audioTime } &nbsp;
+          { secondsToMMSS(audioTime) } &nbsp;
         </span>
         <span style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}>
-          { audioDuration } &nbsp;
+          { secondsToMMSS(audioDuration) } &nbsp;
         </span>
         <input
           style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}

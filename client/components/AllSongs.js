@@ -22,13 +22,11 @@ class AllSongs extends Component {
     this.props.getSongs();
     audio.addEventListener('durationchange', () => {
       const duration = parseInt(audio.duration, 10);
-      console.log('durationchange: ', duration)
       this.setState({ audioDuration: duration })
     })
 
     audio.addEventListener('timeupdate', () => {
       const time = parseInt(audio.currentTime, 10);
-      console.log('timeupdate: ', time, this.state.currentSong)
       this.setState({ audioTime: time })
       if (this.state.currentSong.hash) {
         const slider = document.getElementById(`playback_control_${this.state.currentSong.hash}`)
