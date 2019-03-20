@@ -1,0 +1,9 @@
+#formbox {
+  padding: 3%;
+  margin: 1%;
+  border-radius: 25px;
+  width: 50%;
+  height: 110%;
+  background-color: rgba(255, 255, 255, 0.637);
+}
+

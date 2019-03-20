@@ -1,0 +1,84 @@
+html {
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  background-color: #eff0f4;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+tr {
+  height: 70px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  /* border-bottom: 1px solid rgb(116, 33, 33); */
+}
+
+#titles {
+  font-weight: bold;
+}
+
+tr#allSongs:hover {
+  background-color: #c4f0c5;
+  border-radius: 50%;
+}
+
+h1#Home {
+  color: #929aab;
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+}
+
+h2 {
+  color: #929aab;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3em;
+  font-weight: lighter;
+}
+
+div#Users {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 7em;
+}
+
+p:hover {
+  background-color: #c4f0c5;
+}
+
+a {
+  color: #929aab;
+  text-decoration: unset;
+  font-size: x-large;
+}
+
+p#artist:hover {
+  border-radius: 15px;
+  height: 45px;
+  width: 80px;
+}
+
+p#listener:hover {
+  border-radius: 15px;
+  height: 45px;
+  width: 100px;
+}
+
+i.anticon.anticon {
+  margin-left: 3em;
+  color: #929aab;
+}
+
+audio {
+  height: 0px;
+}
