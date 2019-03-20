@@ -24,7 +24,7 @@ export default function Song(props) {
       </td>
       <td>{title}</td>
       <td>{artist}</td>
-      <td>{hash}</td>
+      {/* <td>{hash}</td> */}
     </tr>
   )
 }

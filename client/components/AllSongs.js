@@ -55,7 +55,7 @@ class AllSongs extends Component {
               <th />
               <th>Title</th>
               <th>Artist</th>
-              <th>Hash</th>
+              {/* <th>Hash</th> */}
             </tr>
             {
               this.props.songs.map(song => {
