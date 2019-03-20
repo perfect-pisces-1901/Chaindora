@@ -4,11 +4,15 @@ import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
 import { Button } from "reactstrap";
 import axios from "axios";
+import TextField from '@material-ui/core/TextField';
 
 class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
+      songTitle: "",
+      genre: "",
+      imageUrl: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg',
       ipfsHash: null,
       buffer: "",
       ethAddress: "",
@@ -53,6 +57,13 @@ class ArtistUpload extends Component {
     }
   }
 
+  async handleChange(event) {
+    event.preventDefault();
+    await this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
   async onSubmit(event) {
     // storehash.options.address =
     //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
@@ -89,43 +100,64 @@ class ArtistUpload extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Upload your audio here:</h1>
-        </header>
-        <hr />
         <div>
-          <h3> Choose file to send to IPFS </h3>
-          <form onSubmit={this.onSubmit}>
-            <input type="file" onChange={this.captureFile} />
-            <Button bsstyle="primary" type="submit">
-              Send it
-            </Button>
-          </form>
+          <div id="formbox">
+            <div>
+            <h2>Upload your audio here:</h2>
+            <div>
+            <form onSubmit={this.onSubmit}>
+              <TextField
+                required
+                type="text"
+                name="songTitle"
+                id="standard-name"
+                label="Song Title"
+                margin="normal"
+                onChange={this.handleChange}
+              />
+              <br/>
+              <TextField
+                required
+                type="text"
+                name="genre"
+                id="standard-name"
+                label="Genre"
+                margin="normal"
+                onChange={this.handleChange}
+              />
+              <br/>
+              <input type="file" onChange={this.captureFile} />
+              <Button bsstyle="primary" type="submit">
+                Send it
+              </Button>
+            </form>
+            </div>
+            </div>
+            <div>
+              <p>Cover Art Preview</p>
+              <img src={this.state.imageUrl} />
+            </div>
+          </div>
           <hr />
           <Button onClick={this.onClick}> Get Transaction Receipt </Button>
           <hr />
           <table bordered="true" responsive="true">
             <thead>
               <tr>
-                <th>Tx Receipt Category</th>
-                <th> </th>
-                <th>Values</th>
+                <th>Your Upload Receipt</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>IPFS Hash stored on Ethereum</td>
-                <td> : </td>
+                <td>Song Upload Hash:</td>
                 <td>{this.state.ipfsHash}</td>
               </tr>
               <tr>
-                <td>Ethereum Contract Address</td>
-                <td> : </td>
+                <td>Contract Address:</td>
                 <td>{this.state.ethAddress}</td>
               </tr>
               <tr>
-                <td>Tx # </td>
-                <td> : </td>
+                <td>Transaction:</td>
                 <td>{this.state.transactionHash}</td>
               </tr>
             </tbody>
