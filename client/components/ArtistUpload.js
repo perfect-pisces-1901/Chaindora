@@ -90,10 +90,10 @@ class ArtistUpload extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Ethereum and IPFS using Infura</h1>
+          <h1>Upload your audio here:</h1>
         </header>
         <hr />
-        <grid>
+        <div>
           <h3> Choose file to send to IPFS </h3>
           <form onSubmit={this.onSubmit}>
             <input type="file" onChange={this.captureFile} />
@@ -130,7 +130,7 @@ class ArtistUpload extends Component {
               </tr>
             </tbody>
           </table>
-        </grid>
+        </div>
       </div>
     );
   }
