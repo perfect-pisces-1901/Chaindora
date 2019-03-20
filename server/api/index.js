@@ -2,7 +2,8 @@
 
 const router = require('express').Router()
 
-router.use('/songs', require('./songs'))
+router.use('/songs', require('./songs'));
+router.use('/auth', require('./auth'));
 
 router.use((req, res, next) => {
   const err = new Error('API route not found!')

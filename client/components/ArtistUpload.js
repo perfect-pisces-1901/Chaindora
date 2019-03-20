@@ -37,6 +37,9 @@ class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
+      songTitle: "",
+      genre: "",
+      imageUrl: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg',
       ipfsHash: null,
       buffer: "",
       ethAddress: "",
@@ -84,8 +87,11 @@ class ArtistUpload extends Component {
     }
   }
 
-  onChange (event) {
-    this.setState({[event.target.name]: event.target.value})
+  async onChange (event) {
+    event.preventDefault()
+    await this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   async onSubmit(event) {
@@ -115,56 +121,87 @@ class ArtistUpload extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 align='center' color='secondary'>Your Chaindora Studio</h1>
-        </header>
-        <hr />
-        <div>
-          <h3> Upload your songs here: </h3>
-          <form onSubmit={this.onSubmit}>
-            <br/>
-              <TextField type='text' name='songName' value={this.state.songName} placeholder='Title' onChange={this.onChange} required />
-            <br/>
-              <TextField type='text' name='genre' value={this.state.genre} placeholder='Genre' onChange={this.onChange} required />
-            <br/>
-            <input id='uploadSong' type="file" style={{display: 'none'}} onChange={this.captureFile} />
-            <label htmlFor='uploadSong'>
-              <Button style={buttonStyle} component='span'>Upload Song</Button>
-            </label>
-            <input id='uploadAlbumArtwork' type="file" style={{display: 'none'}} onChange={this.captureFile} />
-            <label htmlFor='uploadAlbumArtwork'>
-              <Button style={buttonStyle} component='span'>Upload Album Artwork</Button>
-            </label>
-            <br/>
-            <Button bsstyle="primary" type="submit">
-              Send it
-            </Button>
-          </form>
+        <div id="artistform">
+          <div id="formbox">
+            <div id="formupload">
+              <div>
+              <h2>Upload your songs here:</h2>
+              <div>
+              <form onSubmit={this.onSubmit}>
+                <TextField
+                  required
+                  type="text"
+                  name="songTitle"
+                  id="standard-name"
+                  label="Song Title"
+                  margin="normal"
+                  onChange={this.onChange}
+                />
+                <br/>
+                <TextField
+                  required
+                  type="text"
+                  name="genre"
+                  id="standard-name"
+                  label="Genre"
+                  margin="normal"
+                  onChange={this.onChange}
+                />
+                <br/>
+                <div>
+                <input
+                  id='uploadSong'
+                  type="file"
+                  style={{display: 'none'}}
+                  onChange={this.captureFile}
+                />
+                <label htmlFor='uploadSong'>
+                  <Button style={buttonStyle} component='span'>Upload Song</Button>
+                </label>
+                <br/>
+                <input
+                  id='uploadAlbumArtwork'
+                  type="file"
+                  style={{display: 'none'}}
+                  onChange={this.captureFile}
+                />
+                <label htmlFor='uploadAlbumArtwork'>
+                  <Button style={buttonStyle} component='span'>Upload Album Artwork</Button>
+                </label>
+
+                </div>
+                <Button bsstyle="primary" type="submit">
+                  Send it
+                </Button>
+              </form>
+              </div>
+              </div>
+            </div>
+            <div id="formcoverart">
+              <p>Cover Art Preview</p>
+              <img src={this.state.imageUrl} />
+            </div>
+          </div>
           <hr />
           <Button style={buttonStyle} onClick={this.onClick}> Get Transaction Receipt </Button>
           <hr />
           <table bordered="true" responsive="true">
             <thead>
               <tr>
-                <th>Tx Receipt Category</th>
-                <th> </th>
-                <th>Values</th>
+                <th>Your Upload Receipt</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>IPFS Hash stored on Ethereum</td>
-                <td> : </td>
+                <td>Song Upload Hash:</td>
                 <td>{this.state.ipfsHash}</td>
               </tr>
               <tr>
-                <td>Ethereum Contract Address</td>
-                <td> : </td>
+                <td>Contract Address:</td>
                 <td>{this.state.ethAddress}</td>
               </tr>
               <tr>
-                <td>Tx # </td>
-                <td> : </td>
+                <td>Transaction:</td>
                 <td>{this.state.transactionHash}</td>
               </tr>
             </tbody>

@@ -1,0 +1,9 @@
+#navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.link {
+  padding: 1%;
+}
