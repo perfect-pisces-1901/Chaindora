@@ -37,7 +37,6 @@ class AllSongs extends Component {
   }
 
   onInput(ev) {
-    console.log('onInput: ', ev.value, ev.target, ev.target.value)
     audio.currentTime = ev.target.value
     this.setState({ audioTime: ev.target.value })
   }
