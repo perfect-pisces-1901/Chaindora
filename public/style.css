@@ -52,9 +52,15 @@ div#Users {
   margin-top: 7em;
 }
 
+<<<<<<< HEAD
 p:hover {
   background-color: #c4f0c5;
 }
+=======
+/* p:hover {
+  background-color: #c4f0c5;
+} */
+>>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
 
 a {
   color: #929aab;
@@ -66,12 +72,20 @@ p#artist:hover {
   border-radius: 15px;
   height: 45px;
   width: 80px;
+<<<<<<< HEAD
+=======
+  background-color: #c4f0c5;
+>>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
 }
 
 p#listener:hover {
   border-radius: 15px;
   height: 45px;
   width: 100px;
+<<<<<<< HEAD
+=======
+  background-color: #c4f0c5;
+>>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
 }
 
 i.anticon.anticon {
