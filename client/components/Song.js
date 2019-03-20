@@ -4,6 +4,8 @@ export default function Song(props) {
   const song = props.song
   const togglePlay = props.togglePlay
   const currentSong = props.currentSong
+  const audioTime = props.audioTime
+  const audioDuration = props.audioDuration
   const paused = props.paused
   const title = song.title
   const artist = song.artist
@@ -21,7 +23,20 @@ export default function Song(props) {
       </td>
       <td>{title}</td>
       <td>{artist}</td>
-      <td>{hash}</td>
+      <td className="player_controls">
+        <span style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}>
+          { audioTime } &nbsp;
+        </span>
+        <span style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}>
+          { audioDuration } &nbsp;
+        </span>
+        <input
+          style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}
+          id={`playback_control_${hash}`}
+          type="range"
+          defaultValue="0"
+          max={{audioDuration}} />
+      </td>
     </tr>
   )
 }

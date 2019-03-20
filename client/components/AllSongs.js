@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getSongs } from '../reducers/songsReducer';
 import { connect } from 'react-redux';
-import Song from './Song.js'
+import Song from './Song.js';
 
 const audio = document.createElement('audio');
 let audioVisible = false;
@@ -11,6 +11,8 @@ class AllSongs extends Component {
     super(props)
     this.state = {
       currentSong: {},
+      audioTime: 0,
+      audioDuration: 0,
       paused: false
     }
     this.togglePlay = this.togglePlay.bind(this)
@@ -18,13 +20,27 @@ class AllSongs extends Component {
 
   componentDidMount() {
     this.props.getSongs();
+    audio.addEventListener('durationchange', () => {
+      const duration = parseInt(audio.duration, 10);
+      console.log('durationchange: ', duration)
+      this.setState({ audioDuration: duration })
+    })
+
+    audio.addEventListener('timeupdate', () => {
+      const time = parseInt(audio.currentTime, 10);
+      console.log('timeupdate: ', time, this.state.currentSong)
+      this.setState({ audioTime: time })
+      if (this.state.currentSong.hash) {
+        const slider = document.getElementById(`playback_control_${this.state.currentSong.hash}`)
+        slider.value = time
+      }
+    })
   }
 
   togglePlay(ev, song, uri) {
     if (!audioVisible) {
       audioVisible = true
       document.getElementsByTagName('body')[0].appendChild(audio)
-      audio.controls = true
     }
     if (this.state.currentSong.id && (this.state.currentSong.id === song.id)) {
       if (audio.paused) {
@@ -52,7 +68,7 @@ class AllSongs extends Component {
               <td />
               <td>Title</td>
               <td>Artist</td>
-              <td>Hash</td>
+              <td>&nbsp;</td>  {/* for player controls */}
             </tr>
             {
               this.props.songs.map(song => {
@@ -62,6 +78,8 @@ class AllSongs extends Component {
                     song={song}
                     togglePlay={this.togglePlay}
                     currentSong={this.state.currentSong}
+                    audioTime={this.state.audioTime}
+                    audioDuration={this.state.audioDuration}
                     paused={this.state.paused}
                   />
                 )})
