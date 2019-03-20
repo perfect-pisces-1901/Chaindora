@@ -10,7 +10,7 @@ import {withStyles} from '@material-ui/core/styles'
 // import Typography from '@material-ui/core/Typography'
 
 const buttonStyle = {
-  background: 'linear-gradient(45deg, #FF8E53 30%, #00A0EE 90%)',
+  background: '#C4F0C5',
   borderRadius: 3,
   border: 0,
   color: 'white',
@@ -18,20 +18,6 @@ const buttonStyle = {
   padding: '0 30px',
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
 };
-// const buttonStyle = withStyles({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     borderRadius: 3,
-//     border: 0,
-//     color: 'white',
-//     height: 48,
-//     padding: '0 30px',
-//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-//   },
-//   label: {
-//     textTransform: 'capitalize'
-//   }
-// })(Button);
 
 class ArtistUpload extends Component {
   constructor() {
@@ -49,6 +35,7 @@ class ArtistUpload extends Component {
       genre: ""
     };
     this.captureFile = this.captureFile.bind(this);
+    this.captureArtwork = this.captureArtwork.bind(this);
     this.convertToBuffer = this.convertToBuffer.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -61,6 +48,19 @@ class ArtistUpload extends Component {
     console.log('FILES ARE: ', event.target.files)
     const file = event.target.files[0];
     console.log('FILE IS: ', file)
+    let reader = new window.FileReader();
+    console.log('READER IS: ', reader)
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => this.convertToBuffer(reader);
+  }
+  async captureArtwork(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log('FILES ARE: ', event.target.files)
+    const file = event.target.files[0];
+    console.log('FILE IS: ', file)
+    await this.setState({imageUrl: URL.createObjectURL(file)})
+    console.log('STATE', this.state.imageUrl)
     let reader = new window.FileReader();
     console.log('READER IS: ', reader)
     reader.readAsArrayBuffer(file);
@@ -152,6 +152,7 @@ class ArtistUpload extends Component {
                 <input
                   id='uploadSong'
                   type="file"
+                  accept='audio/*'
                   style={{display: 'none'}}
                   onChange={this.captureFile}
                 />
@@ -162,15 +163,16 @@ class ArtistUpload extends Component {
                 <input
                   id='uploadAlbumArtwork'
                   type="file"
+                  accept='image/*'
                   style={{display: 'none'}}
-                  onChange={this.captureFile}
+                  onChange={this.captureArtwork}
                 />
                 <label htmlFor='uploadAlbumArtwork'>
                   <Button style={buttonStyle} component='span'>Upload Album Artwork</Button>
                 </label>
 
                 </div>
-                <Button bsstyle="primary" type="submit">
+                <Button style={buttonStyle} type="submit">
                   Send it
                 </Button>
               </form>
@@ -179,7 +181,7 @@ class ArtistUpload extends Component {
             </div>
             <div id="formcoverart">
               <p>Cover Art Preview</p>
-              <img src={this.state.imageUrl} />
+              <img id="cover-art" src={this.state.imageUrl} />
             </div>
           </div>
           <hr />

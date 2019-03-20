@@ -52,9 +52,9 @@ div#Users {
   margin-top: 7em;
 }
 
-p:hover {
+/* p:hover {
   background-color: #c4f0c5;
-}
+} */
 
 a {
   color: #929aab;
@@ -66,12 +66,14 @@ p#artist:hover {
   border-radius: 15px;
   height: 45px;
   width: 80px;
+  background-color: #c4f0c5;
 }
 
 p#listener:hover {
   border-radius: 15px;
   height: 45px;
   width: 100px;
+  background-color: #c4f0c5;
 }
 
 i.anticon.anticon {
