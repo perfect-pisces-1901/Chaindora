@@ -5,6 +5,58 @@ import Song from './Song.js';
 
 const audio = document.createElement('audio');
 let audioVisible = false;
+let audioCtx;
+let bufferLength;
+let analyser;
+const HEIGHT = 300;
+const WIDTH = 300;
+let canvasCtx;
+let canvas;
+
+function setupAudio() {
+  if (!audioCtx) {
+    audioCtx = new AudioContext();
+    analyser = audioCtx.createAnalyser();
+    audio.crossOrigin = 'anonymous';
+    const source = audioCtx.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination)
+    analyser.fftSize = 2048;
+    bufferLength = analyser.frequencyBinCount;
+    canvas = document.getElementById('canvas');
+    canvasCtx = canvas.getContext('2d');
+    drawVisualizerFrame()
+  }
+}
+
+function drawVisualizerFrame() {
+  // eslint-disable-next-line no-unused-vars
+  var _ = requestAnimationFrame(drawVisualizerFrame);
+  var dataArray = new Uint8Array(bufferLength);
+  analyser.getByteTimeDomainData(dataArray);
+  canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+  canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+  canvasCtx.lineWidth = 2;
+  canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+  canvasCtx.beginPath();
+  var sliceWidth = WIDTH * 1.0 / bufferLength;
+  var x = 0;
+  for (var i = 0; i < bufferLength; i++) {
+
+    var v = dataArray[i] / 128.0;
+    var y = v * HEIGHT / 2;
+
+    if (i === 0) {
+      canvasCtx.moveTo(x, y);
+    } else {
+      canvasCtx.lineTo(x, y);
+    }
+
+    x += sliceWidth;
+  }
+  canvasCtx.lineTo(canvas.width, canvas.height / 2);
+  canvasCtx.stroke();
+}
 
 class AllSongs extends Component {
   constructor(props) {
@@ -42,6 +94,7 @@ class AllSongs extends Component {
   }
 
   togglePlay(ev, song, uri) {
+    setupAudio()
     if (!audioVisible) {
       audioVisible = true
       document.getElementsByTagName('body')[0].appendChild(audio)
@@ -66,6 +119,7 @@ class AllSongs extends Component {
     return (
       <div>
         <h2>Chaindora Catalog</h2>
+        <canvas height={HEIGHT} width={WIDTH} id="canvas" />
         <table id="songs">
           <tbody>
             <tr id="titles">
