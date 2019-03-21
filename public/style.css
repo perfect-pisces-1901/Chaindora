@@ -82,3 +82,23 @@ i.anticon.anticon {
 audio {
   height: 0px;
 }
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-controls {
+  padding: 0.5rem 0;
+}
+
+canvas {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sound-clips {
+  flex: 1;
+  overflow: auto;
+}
