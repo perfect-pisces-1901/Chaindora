@@ -9,13 +9,11 @@ export default class Routes extends Component {
   render() {
     return (
       <Switch>
-        <div id="main">
-          <Route exact path="/" component={HomePage} />
-          <Route path="/SongsList" component={AllSongs} />
-          <Route path="/Login" component={Login} />
-          <Route path="/SignUp" component={Signup} />
-          <Route path="/Artist" component={ArtistUpload} />
-        </div>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/SongsList" component={AllSongs} />
+        <Route path="/Login" component={Login} />
+        <Route path="/SignUp" component={Signup} />
+        <Route path="/Artist" component={ArtistUpload} />
       </Switch>
     );
   }

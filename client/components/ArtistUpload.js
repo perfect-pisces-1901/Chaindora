@@ -78,7 +78,7 @@ class ArtistUpload extends Component {
       await web3.eth.getTransactionReceipt(
         this.state.transactionHash,
         (err, txReceipt) => {
-          // console.log(err, txReceipt);
+          console.log(err, txReceipt);
           this.setState({ txReceipt });
         }
       );
@@ -110,7 +110,7 @@ class ArtistUpload extends Component {
           from: accounts[0]
         },
         (error, transactionHash) => {
-          // console.log(transactionHash);
+          console.log(error);
           this.setState({ transactionHash });
         }
       );
