@@ -4,8 +4,23 @@
 /* eslint-disable quote-props */
 import web3 from "./web3";
 //Your contract address
-const address = "0x132ea5526845E5A4bb8E5Bd0707f09eC7299d8E8";
+const address = "0xd7b90C5315CD69798c7a0813126C6D4408AeEDa0";
 const abi = [
+  {
+    constant: true,
+    inputs: [],
+    name: "amount_to_pay",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+    signature: "0x12006843"
+  },
   {
     constant: false,
     inputs: [
@@ -18,7 +33,8 @@ const abi = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function"
+    type: "function",
+    signature: "0x1ed83fd4"
   },
   {
     constant: true,
@@ -32,7 +48,8 @@ const abi = [
     ],
     payable: false,
     stateMutability: "view",
-    type: "function"
+    type: "function",
+    signature: "0xd13319c4"
   },
   {
     constant: false,
@@ -46,7 +63,8 @@ const abi = [
     outputs: [],
     payable: true,
     stateMutability: "payable",
-    type: "function"
+    type: "function",
+    signature: "0xcdf9c06c"
   }
 ];
 export default new web3.eth.Contract(abi, address);

@@ -37,7 +37,7 @@ class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
-      songTitle: "",
+      songName: "",
       genre: "",
       imageUrl:
         "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
@@ -45,9 +45,7 @@ class ArtistUpload extends Component {
       buffer: "",
       ethAddress: "",
       transactionHash: "",
-      txReceipt: "",
-      songName: "",
-      genre: ""
+      txReceipt: ""
     };
     this.captureFile = this.captureFile.bind(this);
     this.convertToBuffer = this.convertToBuffer.bind(this);
@@ -120,7 +118,8 @@ class ArtistUpload extends Component {
       const song = {
         ipfsHash,
         title: this.state.songName,
-        genre: this.state.genre
+        genre: this.state.genre,
+        ethAddress: accounts[0]
       };
       await axios.post(`/api/songs`, song);
     });
@@ -138,7 +137,7 @@ class ArtistUpload extends Component {
                     <TextField
                       required
                       type="text"
-                      name="songTitle"
+                      name="songName"
                       id="standard-name"
                       label="Song Title"
                       margin="normal"

@@ -38,9 +38,6 @@ const User = db.define("user", {
   },
   googleId: {
     type: Sequelize.STRING
-  },
-  metasmasktAdress: {
-    type: Sequelize.STRING
   }
 });
 
