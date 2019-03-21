@@ -4,9 +4,6 @@ import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
 // import { Button } from "reactstrap";
 import axios from "axios";
-<<<<<<< HEAD
-import TextField from '@material-ui/core/TextField';
-=======
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {withStyles} from '@material-ui/core/styles'
@@ -21,7 +18,6 @@ const buttonStyle = {
   padding: '0 30px',
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
 };
->>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
 
 class ArtistUpload extends Component {
   constructor() {
@@ -91,19 +87,11 @@ class ArtistUpload extends Component {
     }
   }
 
-<<<<<<< HEAD
-  async handleChange(event) {
-    event.preventDefault();
-    await this.setState({
-      [event.target.name]: event.target.value,
-    });
-=======
   async onChange (event) {
     event.preventDefault()
     await this.setState({
       [event.target.name]: event.target.value
     })
->>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
   }
 
   async onSubmit(event) {
@@ -133,44 +121,6 @@ class ArtistUpload extends Component {
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
-        <div>
-          <div id="formbox">
-            <div>
-            <h2>Upload your audio here:</h2>
-            <div>
-            <form onSubmit={this.onSubmit}>
-              <TextField
-                required
-                type="text"
-                name="songTitle"
-                id="standard-name"
-                label="Song Title"
-                margin="normal"
-                onChange={this.handleChange}
-              />
-              <br/>
-              <TextField
-                required
-                type="text"
-                name="genre"
-                id="standard-name"
-                label="Genre"
-                margin="normal"
-                onChange={this.handleChange}
-              />
-              <br/>
-              <input type="file" onChange={this.captureFile} />
-              <Button bsstyle="primary" type="submit">
-                Send it
-              </Button>
-            </form>
-            </div>
-            </div>
-            <div>
-              <p>Cover Art Preview</p>
-              <img src={this.state.imageUrl} />
-=======
         <div id="artistform">
           <div id="formbox">
             <div id="formupload">
@@ -232,7 +182,6 @@ class ArtistUpload extends Component {
             <div id="formcoverart">
               <p>Cover Art Preview</p>
               <img id="cover-art" src={this.state.imageUrl} />
->>>>>>> 0575f417c130b00680118d8e077f78547a4cb715
             </div>
           </div>
           <hr />
