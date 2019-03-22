@@ -4,35 +4,34 @@ import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
 // import { Button } from "reactstrap";
 import axios from "axios";
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import {withStyles} from '@material-ui/core/styles'
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
 // import Typography from '@material-ui/core/Typography'
 
 const buttonStyle = {
   background: '#C4F0C5',
   borderRadius: 3,
   border: 0,
-  color: 'white',
+  color: "white",
   height: 48,
-  padding: '0 30px',
-  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  padding: "0 30px",
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
 };
 
 class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
-      songTitle: "",
+      songName: "",
       genre: "",
-      imageUrl: 'https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg',
+      imageUrl:
+        "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
       ipfsHash: null,
       buffer: "",
       ethAddress: "",
       transactionHash: "",
-      txReceipt: "",
-      songName: "",
-      genre: ""
+      txReceipt: ""
     };
     this.captureFile = this.captureFile.bind(this);
     this.captureArtwork = this.captureArtwork.bind(this);
@@ -45,11 +44,11 @@ class ArtistUpload extends Component {
   captureFile(event) {
     event.stopPropagation();
     event.preventDefault();
-    console.log('FILES ARE: ', event.target.files)
+    console.log("FILES ARE: ", event.target.files);
     const file = event.target.files[0];
-    console.log('FILE IS: ', file)
+    console.log("FILE IS: ", file);
     let reader = new window.FileReader();
-    console.log('READER IS: ', reader)
+    console.log("READER IS: ", reader);
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => this.convertToBuffer(reader);
   }
@@ -87,11 +86,11 @@ class ArtistUpload extends Component {
     }
   }
 
-  async onChange (event) {
-    event.preventDefault()
+  async onChange(event) {
+    event.preventDefault();
     await this.setState({
       [event.target.name]: event.target.value
-    })
+    });
   }
 
   async onSubmit(event) {
@@ -99,6 +98,8 @@ class ArtistUpload extends Component {
     //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
     event.preventDefault();
     const accounts = await web3.eth.getAccounts();
+    console.log(accounts, "metamask");
+    //obtain contract address from storehash.js
     const ethAddress = await storehash.options.address;
     this.setState({ ethAddress });
     // eslint-disable-next-line handle-callback-err
@@ -114,7 +115,12 @@ class ArtistUpload extends Component {
           this.setState({ transactionHash });
         }
       );
-      const song = {ipfsHash, title: this.state.songName, genre: this.state.genre}
+      const song = {
+        ipfsHash,
+        title: this.state.songName,
+        genre: this.state.genre,
+        ethAddress: accounts[0]
+      };
       await axios.post(`/api/songs`, song);
     });
   }
@@ -125,58 +131,59 @@ class ArtistUpload extends Component {
           <div id="formbox">
             <div id="formupload">
               <div>
-              <h2>Upload your songs here:</h2>
-              <div>
-              <form onSubmit={this.onSubmit}>
-                <TextField
-                  required
-                  type="text"
-                  name="songTitle"
-                  id="standard-name"
-                  label="Song Title"
-                  margin="normal"
-                  onChange={this.onChange}
-                />
-                <br/>
-                <TextField
-                  required
-                  type="text"
-                  name="genre"
-                  id="standard-name"
-                  label="Genre"
-                  margin="normal"
-                  onChange={this.onChange}
-                />
-                <br/>
+                <h2>Upload your songs here:</h2>
                 <div>
-                <input
-                  id='uploadSong'
-                  type="file"
-                  accept='audio/*'
-                  style={{display: 'none'}}
-                  onChange={this.captureFile}
-                />
-                <label htmlFor='uploadSong'>
-                  <Button style={buttonStyle} component='span'>Upload Song</Button>
-                </label>
-                <br/>
-                <input
-                  id='uploadAlbumArtwork'
-                  type="file"
-                  accept='image/*'
-                  style={{display: 'none'}}
-                  onChange={this.captureArtwork}
-                />
-                <label htmlFor='uploadAlbumArtwork'>
-                  <Button style={buttonStyle} component='span'>Upload Album Artwork</Button>
-                </label>
-
+                  <form onSubmit={this.onSubmit}>
+                    <TextField
+                      required
+                      type="text"
+                      name="songName"
+                      id="standard-name"
+                      label="Song Title"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <br />
+                    <TextField
+                      required
+                      type="text"
+                      name="genre"
+                      id="standard-name"
+                      label="Genre"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <br />
+                    <div>
+                      <input
+                        id="uploadSong"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={this.captureFile}
+                      />
+                      <label htmlFor="uploadSong">
+                        <Button style={buttonStyle} component="span">
+                          Upload Song
+                        </Button>
+                      </label>
+                      <br />
+                      <input
+                        id="uploadAlbumArtwork"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={this.captureFile}
+                      />
+                      <label htmlFor="uploadAlbumArtwork">
+                        <Button style={buttonStyle} component="span">
+                          Upload Album Artwork
+                        </Button>
+                      </label>
+                    </div>
+                    <Button bsstyle="primary" type="submit">
+                      Send it
+                    </Button>
+                  </form>
                 </div>
-                <Button style={buttonStyle} type="submit">
-                  Send it
-                </Button>
-              </form>
-              </div>
               </div>
             </div>
             <div id="formcoverart">
@@ -185,7 +192,10 @@ class ArtistUpload extends Component {
             </div>
           </div>
           <hr />
-          <Button style={buttonStyle} onClick={this.onClick}> Get Transaction Receipt </Button>
+          <Button style={buttonStyle} onClick={this.onClick}>
+            {" "}
+            Get Transaction Receipt{" "}
+          </Button>
           <hr />
           <table bordered="true" responsive="true">
             <thead>
