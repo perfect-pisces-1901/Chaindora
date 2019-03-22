@@ -11,12 +11,13 @@ import Button from "@material-ui/core/Button";
  */
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
+  console.log(name, "$$$$$$$$");
   return (
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
         <h1 className="title">Please {displayName}</h1>
         {displayName === "Login" ? (
-          <div style="display:flex; flex-direction:column">
+          <div>
             <TextField
               required
               type="text"
@@ -35,7 +36,7 @@ const AuthForm = props => {
             />
           </div>
         ) : (
-          <div style="display: flex; flex-direction: column">
+          <div>
             <TextField
               required
               type="text"
@@ -73,7 +74,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <Button type="submit" variant="outlined" color="secondary" style="">
+      <Button type="submit" variant="outlined" color="secondary">
         <a href="/auth/google">{displayName} with Google</a>
       </Button>
     </div>
@@ -126,3 +127,13 @@ export const Signup = connect(
   mapSignup,
   mapDispatch
 )(AuthForm);
+
+/**
+ * PROP TYPES
+ */
+// AuthForm.propTypes = {
+// name: PropTypes.string.isRequired,
+// displayName: PropTypes.string.isRequired,
+// handleSubmit: PropTypes.func.isRequired,
+// error: PropTypes.object
+// }
