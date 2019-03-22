@@ -10,11 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "..", "public")));
-app.use(
-  express.static(
-    path.join(__dirname, "..", "node_modules", "font-awesome", "css")
-  )
-);
+// app.use(
+//   express.static(
+//     path.join(__dirname, "..", "node_modules", "font-awesome", "css")
+//   )
+// );
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -30,31 +30,31 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.use(
-  "/fonts",
-  express.static(
-    path.join(__dirname, "..", "node_modules", "font-awesome", "fonts")
-  )
-);
+// app.use(
+//   "/fonts",
+//   express.static(
+//     path.join(__dirname, "..", "node_modules", "font-awesome", "fonts")
+//   )
+// );
 
-app.use(function(req, res, next) {
-  // CORS headers
+// app.use(function(req, res, next) {
+//   // CORS headers
 
-  // TODO: DEV ONLY, - too broad - DO NOT PUT IN PRODUCTION - should restrict to specific domain
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-type,Accept,X-Custom-Header"
-  );
+//   // TODO: DEV ONLY, - too broad - DO NOT PUT IN PRODUCTION - should restrict to specific domain
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Content-type,Accept,X-Custom-Header"
+//   );
 
-  // TODO - what does this do?
-  // if (req.method === 'OPTIONS') {
-  //     return res.status(200).end();
-  // }
+//   // TODO - what does this do?
+//   // if (req.method === 'OPTIONS') {
+//   //     return res.status(200).end();
+//   // }
 
-  return next();
-});
+//   return next();
+// });
 
 app.use(express.static(path.join(__dirname, "..", "public")));
 
