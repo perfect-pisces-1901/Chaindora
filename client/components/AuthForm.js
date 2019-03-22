@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 // import PropTypes from 'prop-types'
-import { auth } from "../reducers/user";
+import { auth } from "../reducers/userReducer";
 import TextField from "@material-ui/core/TextField";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
  */
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
-  console.log(name, "$$$$$$$$");
   return (
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>

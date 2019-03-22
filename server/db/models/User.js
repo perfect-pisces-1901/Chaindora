@@ -44,6 +44,12 @@ module.exports = User;
 
 /* INSTANCE METHODS */
 
+User.prototype.correctPassword = function(candidatePwd) {
+  return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
+/* CLASS METHODS */
+
 User.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')
 }

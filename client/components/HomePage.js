@@ -9,10 +9,10 @@ export default function HomePage() {
       </div>
       <div id="users">
         <p id="artist">
-          <Link to="/Artist">Artists</Link>
+          <Link to="/upload">Artists</Link>
         </p>
         <p id="listener">
-          <Link to="/SongsList">Listeners</Link>
+          <Link to="/songs">Listeners</Link>
         </p>
       </div>
     </div>

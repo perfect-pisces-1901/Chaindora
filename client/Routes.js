@@ -1,20 +1,50 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import AllSongs from "./components/AllSongs";
-import {Login, Signup} from "./components/AuthForm";
-import ArtistUpload from "./components/ArtistUpload";
-import HomePage from "./components/HomePage";
+import React, { Component } from 'react';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import AllSongs from './components/AllSongs';
+import { Login, Signup } from './components/AuthForm';
+import ArtistUpload from './components/ArtistUpload';
+import HomePage from './components/HomePage';
+import {me} from './reducers/userReducer';
+import {connect} from 'react-redux';
 
-export default class Routes extends Component {
+class Routes extends Component {
+  componentDidMount() {
+    this.props.getUser();
+  }
+
   render() {
+    console.log("user is:", this.props.user)
+    const { isLoggedIn } = this.props;
+
     return (
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/SongsList" component={AllSongs} />
-        <Route path="/Login" component={Login} />
-        <Route path="/SignUp" component={Signup} />
-        <Route path="/Artist" component={ArtistUpload} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        {isLoggedIn && (
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/songs" component={AllSongs} />
+            <Route path="/upload" component={ArtistUpload} />
+          </Switch>
+        )}
+        <Redirect to='/login' />
       </Switch>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isLoggedIn: !!state.user.id,
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  getUser(){
+    dispatch(me())
+  },
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Routes))
