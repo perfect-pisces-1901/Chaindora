@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 // import PropTypes from 'prop-types'
-import { auth } from "../reducers/user";
+import { auth } from "../reducers/userReducer";
 import TextField from "@material-ui/core/TextField";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Button from "@material-ui/core/Button";
@@ -11,13 +11,12 @@ import Button from "@material-ui/core/Button";
  */
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
-  console.log(name, "$$$$$$$$");
   return (
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
         <h1 className="title">Please {displayName}</h1>
         {displayName === "Login" ? (
-          <div>
+          <div style="display:flex; flex-direction:column">
             <TextField
               required
               type="text"
@@ -36,7 +35,7 @@ const AuthForm = props => {
             />
           </div>
         ) : (
-          <div>
+          <div style="display: flex; flex-direction: column">
             <TextField
               required
               type="text"
@@ -74,7 +73,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <Button type="submit" variant="outlined" color="secondary">
+      <Button type="submit" variant="outlined" color="secondary" style="">
         <a href="/auth/google">{displayName} with Google</a>
       </Button>
     </div>

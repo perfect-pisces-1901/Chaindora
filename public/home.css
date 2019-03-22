@@ -1,0 +1,42 @@
+#home {
+  color: #929aab;
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+  font-size: 300%;
+}
+
+#home-div {
+  transition: all ease-out 1s;
+}
+
+.home-down {
+  opacity: 0;
+  transform: translateY(-4vh);
+}
+
+.home-up {
+  opacity: 1;
+  transform: translateY(-10vh);
+}
+
+.user-button {
+  text-align: center;
+  font-size: 1.3em;
+  padding: 1%;
+}
+
+.user-button:hover {
+  border-radius: 10px;
+  background-color: #70bfff;
+  transition: all linear 0.2s;
+  color: white;
+}
+
+#users {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 4em;
+  transition: all ease-out 1s;
+}
