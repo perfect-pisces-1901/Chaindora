@@ -111,13 +111,7 @@ class AllSongs extends Component {
       audio.src = uri;
       audio.load();
       audio.play();
-      await this.setState({ currentSong: song, paused: false });
-      storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
-        from: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
-
-        value: 10 ** 16
-      });
-      console.log(this.state.currentSong.ethAddress);
+      this.setState({ currentSong: song, paused: false });
     }
   }
 
