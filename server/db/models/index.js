@@ -1,4 +1,3 @@
-const db = require('../index');
 const User = require('./User');
 const Album = require('./Album');
 const Song = require('./Song');
@@ -24,6 +23,5 @@ module.exports = {
   Album,
   Song,
   Playlist,
-  db
 }
 

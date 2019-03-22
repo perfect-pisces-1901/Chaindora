@@ -5,8 +5,9 @@ const compression = require('compression');
 const session = require('express-session');
 const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const db = require('./db/models/index');
+const db = require('./db');
 const sessionStore = new SequelizeStore({db});
+console.log("******* this is DB.MODELS", db.models.user);
 const app = express();
 const PORT = 8080;
 module.exports = app;
@@ -49,7 +50,6 @@ const createApp = () => {
   app.use(express.static(path.join(__dirname, '..', 'public')));
 
   app.use('/api', require('./api'));
-
   app.use('/auth', require('./api/auth'));
 
   app.get('*', (req, res) => {

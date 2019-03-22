@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../index');
+const db = require('../db');
 
 const Playlist = db.define('playlist', {
   title: {
