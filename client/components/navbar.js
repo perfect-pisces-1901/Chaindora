@@ -10,6 +10,10 @@ const Navbar = props => {
       <NavLink className="link" to="/upload">Upload</NavLink>
       <br/>
       <NavLink className="link" to="/songs">Listen</NavLink>
+      <br/>
+      <NavLink className="link" to="/login">Login</NavLink>
+      <br/>
+      <NavLink className="link" to="/signup">Sign Up</NavLink>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 const db = require('../index');
-const User = require('User');
-const Album = require('Album');
-const Song = require('Song');
-const Playlist = require('Playlist');
+const User = require('./User');
+const Album = require('./Album');
+const Song = require('./Song');
+const Playlist = require('./Playlist');
 
 User.hasMany(Playlist);
 Playlist.belongsTo(User);
