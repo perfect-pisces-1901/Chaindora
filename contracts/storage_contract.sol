@@ -2,7 +2,7 @@ pragma solidity >= 0.4.17;
 
 contract Contract {
   string ipfsHash;
-  uint amount = 2 ether;
+ uint public amount_to_pay = 1 ether;
 
   function setHash(string memory x) public {
     ipfsHash = x;
@@ -12,9 +12,11 @@ contract Contract {
     return ipfsHash;
   }
 
-  function payArtist(address payable artist ) payable public {
-      artist.transfer(amount);
-  }
- 
+  function payArtist(address payable artist) payable public {
+
 
 }
+}
+
+
+ 
