@@ -8,8 +8,8 @@ let audioVisible = false;
 let audioCtx;
 let bufferLength;
 let analyser;
-const HEIGHT = 300;
-const WIDTH = 300;
+const HEIGHT = window.innerHeight;
+const WIDTH = window.innerWidth;
 let canvasCtx;
 let canvas;
 
@@ -21,7 +21,8 @@ function setupAudio() {
     const source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
     analyser.connect(audioCtx.destination)
-    analyser.fftSize = 2048;
+    analyser.fftSize = 32768;
+    // analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
     canvas = document.getElementById('canvas');
     canvasCtx = canvas.getContext('2d');
@@ -31,25 +32,36 @@ function setupAudio() {
 
 function drawVisualizerFrame() {
   // eslint-disable-next-line no-unused-vars
-  var _ = requestAnimationFrame(drawVisualizerFrame);
-  var dataArray = new Uint8Array(bufferLength);
+  requestAnimationFrame(drawVisualizerFrame);
+  const dataArray = new Uint8Array(bufferLength);
   analyser.getByteTimeDomainData(dataArray);
-  canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+  canvasCtx.fillStyle = '#eff0f4'
   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-  canvasCtx.lineWidth = 2;
-  canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
-  canvasCtx.beginPath();
-  var sliceWidth = WIDTH * 1.0 / bufferLength;
-  var x = 0;
-  for (var i = 0; i < bufferLength; i++) {
+  // var barWidth = (WIDTH / bufferLength) * 2.5;
+  // var barHeight;
+  // var x = 0;
+  // for (let i = 0; i < bufferLength; i++) {
+  //   barHeight = dataArray[i] / 2;
 
-    var v = dataArray[i] / 128.0;
-    var y = v * HEIGHT / 2;
+  //   canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+  //   canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
+
+  //   x += barWidth + 1;
+  // }
+  canvasCtx.lineWidth = 4;
+  canvasCtx.strokeStyle = '#c4f0c5';
+  canvasCtx.beginPath();
+  const sliceWidth = WIDTH * 1.0 / bufferLength;
+  let x = 0;
+  for (let i = 0; i < bufferLength; i++) {
+
+    const v = dataArray[i] / 128.0;
+    const y = v * HEIGHT / 2;
 
     if (i === 0) {
-      canvasCtx.moveTo(x, y);
+      canvasCtx.moveTo(x, y + 100);
     } else {
-      canvasCtx.lineTo(x, y);
+      canvasCtx.lineTo(x, y + 100);
     }
 
     x += sliceWidth;
@@ -112,14 +124,18 @@ class AllSongs extends Component {
       audio.load();
       audio.play();
       this.setState({ currentSong: song, paused: false });
+      storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
+        from: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
+        value: 10 ** 16
+      });
     }
   }
 
   render() {
     return (
       <div>
+        <canvas height={HEIGHT} width={WIDTH} id="canvas" ref="canvas" />
         <h2>Chaindora Catalog</h2>
-        <canvas height={HEIGHT} width={WIDTH} id="canvas" />
         <table id="songs">
           <tbody>
             <tr id="titles">
