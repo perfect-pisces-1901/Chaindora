@@ -7,7 +7,6 @@ const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
 const sessionStore = new SequelizeStore({db});
-console.log("******* this is DB.MODELS", db.models.user);
 const app = express();
 const PORT = 8080;
 module.exports = app;
@@ -16,7 +15,7 @@ passport.serializeUser((user, done) => done(null, user.id));
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.models.user.findById(id);
+    const user = await db.models.user.findByPk(id);
     done(null, user);
   } catch (err) {
     done(err);

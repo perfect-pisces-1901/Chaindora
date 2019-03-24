@@ -13,24 +13,20 @@ class Routes extends Component {
   }
 
   render() {
-    console.log("user is:", this.props.user)
     const { isLoggedIn } = this.props;
 
     return (
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={HomePage} />
-        <Route path="/songs" component={AllSongs} />
-        <Route path="/upload" component={ArtistUpload} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route path="/home" component={HomePage} />
             <Route path="/songs" component={AllSongs} />
             <Route path="/upload" component={ArtistUpload} />
           </Switch>
         )}
-        <Redirect to='/login' />
       </Switch>
     );
   }

@@ -4,6 +4,7 @@ import { auth } from '../reducers/userReducer';
 import TextField from '@material-ui/core/TextField';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Button from '@material-ui/core/Button';
+import history from '../history';
 
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
