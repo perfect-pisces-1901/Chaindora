@@ -1,10 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { auth } from '../reducers/userReducer';
-import TextField from '@material-ui/core/TextField';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Button from '@material-ui/core/Button';
-import history from '../history';
+import React from "react";
+import { connect } from "react-redux";
+import { auth } from "../reducers/userReducer";
+import TextField from "@material-ui/core/TextField";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import Button from "@material-ui/core/Button";
+import history from "../history";
+import { withRouter } from "react-router-dom";
 
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
@@ -12,22 +13,22 @@ const AuthForm = props => {
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
         <h1 className="title">Please {displayName}</h1>
-          <TextField
-            required
-            type="text"
-            name="email"
-            id="standard-name"
-            label="email"
-            margin="normal"
-          />
-          <TextField
-            required
-            type="password"
-            name="password"
-            id="standard-name"
-            label="password"
-            margin="normal"
-          />
+        <TextField
+          required
+          type="text"
+          name="email"
+          id="standard-name"
+          label="email"
+          margin="normal"
+        />
+        <TextField
+          required
+          type="password"
+          name="password"
+          id="standard-name"
+          label="password"
+          margin="normal"
+        />
         <div>
           <Button type="submit" variant="contained" color="primary">
             {displayName}&ensp;
@@ -44,15 +45,15 @@ const AuthForm = props => {
 
 const mapLogin = state => {
   return {
-    name: 'login',
-    displayName: 'Login',
+    name: "login",
+    displayName: "Login"
   };
 };
 
 const mapSignup = state => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
+    name: "signup",
+    displayName: "Sign Up"
   };
 };
 
@@ -66,15 +67,19 @@ const mapDispatch = dispatch => {
       const username = evt.target.name.value;
 
       dispatch(auth(username, email, password, formName));
-    },
+    }
   };
 };
 
-export const Login = connect(
-  mapLogin,
-  mapDispatch
-)(AuthForm);
-export const Signup = connect(
-  mapSignup,
-  mapDispatch
-)(AuthForm);
+export const Login = withRouter(
+  connect(
+    mapLogin,
+    mapDispatch
+  )(AuthForm)
+);
+export const Signup = withRouter(
+  connect(
+    mapSignup,
+    mapDispatch
+  )(AuthForm)
+);

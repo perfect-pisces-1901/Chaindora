@@ -1,6 +1,6 @@
 * {
   font-family: "Raleway", sans-serif;
-  color:#929aab;
+  color: #929aab;
 }
 
 body {
@@ -52,4 +52,9 @@ a {
 
 audio {
   height: 0px;
+}
+
+div.row {
+  display: flex;
+  flex-direction: row;
 }
