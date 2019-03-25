@@ -23,7 +23,6 @@ router.post("/", async (req, res, next) => {
     });
     res.json(newSong);
   } catch (error) {
-    // console.log('error*****************error', error)
     next(error);
   }
 });

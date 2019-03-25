@@ -1,44 +1,41 @@
-const Sequelize = require("sequelize");
-const db = require("../index");
-const crypto = require("crypto");
+const Sequelize = require('sequelize');
+const db = require('../db');
+const crypto = require('crypto');
 
-const User = db.define("user", {
+const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   isArtist: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   isListener: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue:
-      "https://www.sterlitech.com/static/version1550744966/frontend/SCI/sterlitech/en_US/Mageplaza_Blog/media/images/no-artist-image.jpg"
+      'https://www.sterlitech.com/static/version1550744966/frontend/SCI/sterlitech/en_US/Mageplaza_Blog/media/images/no-artist-image.jpg',
   },
   password: {
     type: Sequelize.STRING,
     get() {
-      return () => this.getDataValue("password");
-    }
+      return () => this.getDataValue('password');
+    },
   },
   salt: {
     type: Sequelize.STRING,
     get() {
-      return () => this.getDataValue("salt");
-    }
+      return () => this.getDataValue('salt');
+    },
   },
-  googleId: {
-    type: Sequelize.STRING
-  }
 });
 
 module.exports = User;
@@ -50,21 +47,21 @@ User.prototype.correctPassword = function(candidatePwd) {
 };
 
 User.generateSalt = function() {
-  return crypto.randomBytes(16).toString("base64");
+  return crypto.randomBytes(16).toString('base64');
 };
 
 User.encryptPassword = function(plainText, salt) {
   return crypto
-    .createHash("RSA-SHA256")
+    .createHash('RSA-SHA256')
     .update(plainText)
     .update(salt)
-    .digest("hex");
+    .digest('hex');
 };
 
 /* HOOKS */
 
 const setSaltAndPassword = user => {
-  if (user.changed("password")) {
+  if (user.changed('password')) {
     user.salt = User.generateSalt();
     user.password = User.encryptPassword(user.password(), user.salt());
   }

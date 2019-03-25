@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../history';
 
 /**
  * ACTION TYPES
@@ -32,17 +33,14 @@ export const me = () => async dispatch => {
 export const auth = (name, email, password, method) => async dispatch => {
   let res;
   try {
-    if (method === "login") {
-      res = await axios.post(`/auth/${method}`, { email, password });
-    } else {
-      res = await axios.post(`/auth/${method}`, { name, email, password });
-    }
+    res = await axios.post(`/auth/${method}`, { email, password });
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }
 
   try {
     dispatch(getUser(res.data));
+    history.push('/');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }

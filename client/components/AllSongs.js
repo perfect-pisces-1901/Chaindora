@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getSongs } from '../reducers/songsReducer';
 import { connect } from 'react-redux';
 import Song from './Song.js';
+import storehash from "../../src/storehash";
 
 const audio = document.createElement('audio');
 let audioVisible = false;
