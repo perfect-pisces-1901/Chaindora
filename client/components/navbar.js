@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 
-const Navbar = props => {
+const Navbar = () => {
   return (
     <div id="navbar" className="row">
       <NavLink className="link" to="/">
@@ -9,7 +9,7 @@ const Navbar = props => {
       </NavLink>
       <NavLink className="link" to="/upload">Upload</NavLink>
       <NavLink className="link" to="/record">Record</NavLink>
-      <br/>
+      <br />
       <NavLink className="link" to="/songs">Listen</NavLink>
     </div>
   );

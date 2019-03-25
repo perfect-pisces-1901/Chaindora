@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 let audioCtx;
 let canvasCtx;
 let constraints;
@@ -13,7 +13,7 @@ export default class AudioRecorder extends Component {
     this.state = {
       recordDisabled: false,
       stopDisabled: true,
-      recordingColor: "blue"
+      recordingColor: 'blue'
     };
     this.onRecord = this.onRecord.bind(this);
     this.onStop = this.onStop.bind(this);
@@ -24,18 +24,18 @@ export default class AudioRecorder extends Component {
   }
 
   componentDidMount() {
-    canvas = document.querySelector(".visualizer");
+    canvas = document.querySelector('.visualizer');
   }
 
   startRecording() {
-    console.log("onRecord");
+    console.log('onRecord');
     mediaRecorder.start();
     console.log(mediaRecorder.state);
-    console.log("recorder started");
+    console.log('recorder started');
     this.setState({
       recordDisabled: true,
       stopDisabled: false,
-      recordingColor: "red"
+      recordingColor: 'red'
     });
   }
 
@@ -45,7 +45,7 @@ export default class AudioRecorder extends Component {
       p.then(this.onSuccess)
         .then(this.startRecording)
         .catch(err => {
-          console.log("The following error occured: " + err);
+          console.log('The following error occured: ' + err);
         });
     } else {
       this.startRecording();
@@ -55,40 +55,42 @@ export default class AudioRecorder extends Component {
   onStop() {
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
-    console.log("recorder stopped");
+    console.log('recorder stopped');
     this.setState({
       recordDisabled: false,
       stopDisabled: true,
-      recordingColor: "blue"
+      recordingColor: 'blue'
     });
   }
 
   onSuccess(stream) {
-    console.log("$$$$$$$");
+    console.log('$$$$$$$');
     mediaRecorder = new MediaRecorder(stream);
 
     this.visualize(stream);
 
-    mediaRecorder.onstop = function(e) {
-      console.log("data available after MediaRecorder.stop() called.");
+    // eslint-disable-next-line no-unused-vars
+    mediaRecorder.onstop = function(_e) {
+      console.log('data available after MediaRecorder.stop() called.');
 
+      // eslint-disable-next-line no-alert
       var clipName = prompt(
-        "Enter a name for your sound clip?",
-        "My unnamed clip"
+        'Enter a name for your sound clip?',
+        'My unnamed clip'
       );
       console.log(clipName);
-      var clipContainer = document.createElement("article");
-      var clipLabel = document.createElement("p");
-      var audio = document.createElement("audio");
-      var deleteButton = document.createElement("button");
+      var clipContainer = document.createElement('article');
+      var clipLabel = document.createElement('p');
+      var audio = document.createElement('audio');
+      var deleteButton = document.createElement('button');
 
-      clipContainer.classList.add("clip");
-      audio.setAttribute("controls", "");
-      deleteButton.textContent = "Delete";
-      deleteButton.className = "delete";
+      clipContainer.classList.add('clip');
+      audio.setAttribute('controls', '');
+      deleteButton.textContent = 'Delete';
+      deleteButton.className = 'delete';
 
       if (clipName === null) {
-        clipLabel.textContent = "My unnamed clip";
+        clipLabel.textContent = 'My unnamed clip';
       } else {
         clipLabel.textContent = clipName;
       }
@@ -96,25 +98,28 @@ export default class AudioRecorder extends Component {
       clipContainer.appendChild(audio);
       clipContainer.appendChild(clipLabel);
       clipContainer.appendChild(deleteButton);
-      soundClips = document.querySelector(".sound-clips");
+      soundClips = document.querySelector('.sound-clips');
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      var blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+      var blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
       chunks = [];
       var audioURL = window.URL.createObjectURL(blob);
-      console.log(audioURL, "audioUrl");
+      console.log(audioURL, 'audioUrl');
       audio.src = audioURL;
-      console.log("recorder stopped");
+      console.log('recorder stopped');
 
       deleteButton.onclick = function(e) {
+        // eslint-disable-next-line no-undef
         evtTgt = e.target;
+        // eslint-disable-next-line no-undef
         evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
       };
 
       clipLabel.onclick = function() {
         var existingName = clipLabel.textContent;
-        var newClipName = prompt("Enter a new name for your sound clip?");
+        // eslint-disable-next-line no-alert
+        var newClipName = prompt('Enter a new name for your sound clip?');
         if (newClipName === null) {
           clipLabel.textContent = existingName;
         } else {
@@ -130,18 +135,19 @@ export default class AudioRecorder extends Component {
 
   Setup() {
     if (!audioCtx) {
+      // eslint-disable-next-line no-undef
       audioCtx = new (window.AudioContext || webkitAudioContext)();
-      canvasCtx = canvas.getContext("2d");
+      canvasCtx = canvas.getContext('2d');
       if (navigator.mediaDevices.getUserMedia) {
-        console.log("getUserMedia supported.");
+        console.log('getUserMedia supported.');
 
         constraints = { audio: true };
         chunks = [];
 
-        console.log("!!!!!!!!");
+        console.log('!!!!!!!!');
         return navigator.mediaDevices.getUserMedia(constraints);
       } else {
-        console.log("getUserMedia not supported on your browser!");
+        console.log('getUserMedia not supported on your browser!');
       }
     }
   }
@@ -167,11 +173,11 @@ export default class AudioRecorder extends Component {
 
       analyser.getByteTimeDomainData(dataArray);
 
-      canvasCtx.fillStyle = "rgb(200, 200, 200)";
+      canvasCtx.fillStyle = 'rgb(200, 200, 200)';
       canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
       canvasCtx.lineWidth = 2;
-      canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+      canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
 
       canvasCtx.beginPath();
 
@@ -207,6 +213,7 @@ export default class AudioRecorder extends Component {
           <canvas className="visualizer" height="60px" />
           <div id="buttons">
             <button
+              type="button"
               style={{ color: this.state.recordingColor }}
               className="record"
               disabled={this.state.recordDisabled}
@@ -215,6 +222,7 @@ export default class AudioRecorder extends Component {
               Record
             </button>
             <button
+              type="button"
               className="stop"
               disabled={this.state.stopDisabled}
               onClick={this.onStop}
