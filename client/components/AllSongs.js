@@ -3,6 +3,8 @@ import { getSongs } from '../reducers/songsReducer';
 import { connect } from 'react-redux';
 import Song from './Song.js';
 
+let counter = 0;
+
 class AllSongs extends Component {
   constructor(props) {
     super(props);
@@ -74,6 +76,10 @@ class AllSongs extends Component {
     // eslint-disable-next-line no-unused-vars
     requestAnimationFrame(() => this.drawVisualizerFrame(bufferLength, analyser, canvasCtx, canvas));
     const dataArray = new Uint8Array(bufferLength);
+    // if (counter === 0) {
+    //   console.log(dataArray)
+    //   counter++;
+    // }
     analyser.getByteTimeDomainData(dataArray);
     canvasCtx.fillStyle = '#eff0f4'
     canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
@@ -93,6 +99,8 @@ class AllSongs extends Component {
       x += sliceWidth;
     }
     canvasCtx.lineTo(canvas.width, canvas.height / 2);
+    // canvasCtx.moveTo(100, 100);
+    // canvasCtx.lineTo(0, 0);
     canvasCtx.stroke();
   }
 
@@ -131,7 +139,7 @@ class AllSongs extends Component {
     return (
       <div>
         <audio controls={true} ref='audio' />
-        <canvas height='100vh' width='100vw' id="canvas" ref="canvas" />
+        <canvas height='300' width='300' id="canvas" ref="canvas" />
         <h2>Chaindora Catalog</h2>
         <table id="songs">
           <tbody>
