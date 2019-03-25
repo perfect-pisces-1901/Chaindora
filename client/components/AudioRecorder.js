@@ -12,6 +12,7 @@ export default class AudioRecorder extends Component {
     this.addClip = this.addClip.bind(this)
   }
 
+
   addClip(clip) {
     this.setState((prevState) => ({
       ...prevState,
@@ -51,7 +52,7 @@ export default class AudioRecorder extends Component {
         <section className="sound-clips">
         {
           this.state.clips.map(clip => {
-            console.log('MOOO: ', clip)
+            console.log('MOOO: ', clip, clip.audioURL)
             return (
               <article key={clip.id} className="clip">
                 { /* eslint-disable-next-line react/self-closing-comp */ }

@@ -105,6 +105,7 @@ export default class ReactMediaRecorder extends React.Component {
         .forEach(track => (track.enabled = !this.props.muted));
       this.stream = stream;
     }
+    this.stopRecording()
   };
   componentDidUpdate = prevProps => {
     if (prevProps.muted !== this.props.muted) {
