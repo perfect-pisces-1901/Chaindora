@@ -153,7 +153,7 @@ class AllSongs extends Component {
             {this.props.songs.map(song => {
               return (
                 <Song
-                  key={song.hash}
+                  key={song.id}
                   song={song}
                   togglePlay={this.togglePlay}
                   currentSong={this.state.currentSong}
