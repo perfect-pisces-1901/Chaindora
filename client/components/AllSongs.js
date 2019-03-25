@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { getSongs } from '../reducers/songsReducer';
-import { connect } from 'react-redux';
-import Song from './Song.js';
+import React, { Component } from "react";
+import { getSongs } from "../reducers/songsReducer";
+import { connect } from "react-redux";
+import Song from "./Song.js";
 import storehash from "../../src/storehash";
 
-const audio = document.createElement('audio');
+const audio = document.createElement("audio");
 let audioVisible = false;
 let audioCtx;
 let bufferLength;
@@ -18,16 +18,16 @@ function setupAudio() {
   if (!audioCtx) {
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
-    audio.crossOrigin = 'anonymous';
+    audio.crossOrigin = "anonymous";
     const source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
-    analyser.connect(audioCtx.destination)
+    analyser.connect(audioCtx.destination);
     analyser.fftSize = 32768;
     // analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
-    canvas = document.getElementById('canvas');
-    canvasCtx = canvas.getContext('2d');
-    drawVisualizerFrame()
+    canvas = document.getElementById("canvas");
+    canvasCtx = canvas.getContext("2d");
+    drawVisualizerFrame();
   }
 }
 
@@ -36,7 +36,7 @@ function drawVisualizerFrame() {
   requestAnimationFrame(drawVisualizerFrame);
   const dataArray = new Uint8Array(bufferLength);
   analyser.getByteTimeDomainData(dataArray);
-  canvasCtx.fillStyle = '#eff0f4'
+  canvasCtx.fillStyle = "#eff0f4";
   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
   // var barWidth = (WIDTH / bufferLength) * 2.5;
   // var barHeight;
@@ -50,14 +50,13 @@ function drawVisualizerFrame() {
   //   x += barWidth + 1;
   // }
   canvasCtx.lineWidth = 4;
-  canvasCtx.strokeStyle = '#c4f0c5';
+  canvasCtx.strokeStyle = "#c4f0c5";
   canvasCtx.beginPath();
-  const sliceWidth = WIDTH * 1.0 / bufferLength;
+  const sliceWidth = (WIDTH * 1.0) / bufferLength;
   let x = 0;
   for (let i = 0; i < bufferLength; i++) {
-
     const v = dataArray[i] / 128.0;
-    const y = v * HEIGHT / 2;
+    const y = (v * HEIGHT) / 2;
 
     if (i === 0) {
       canvasCtx.moveTo(x, y + 100);
@@ -86,31 +85,33 @@ class AllSongs extends Component {
 
   componentDidMount() {
     this.props.getSongs();
-    audio.addEventListener('durationchange', () => {
+    audio.addEventListener("durationchange", () => {
       const duration = parseInt(audio.duration, 10);
-      this.setState({ audioDuration: duration })
-    })
+      this.setState({ audioDuration: duration });
+    });
 
-    audio.addEventListener('timeupdate', () => {
+    audio.addEventListener("timeupdate", () => {
       const time = parseInt(audio.currentTime, 10);
-      this.setState({ audioTime: time })
+      this.setState({ audioTime: time });
       if (this.state.currentSong.hash) {
-        const slider = document.getElementById(`playback_control_${this.state.currentSong.hash}`)
-        slider.value = time
+        const slider = document.getElementById(
+          `playback_control_${this.state.currentSong.hash}`
+        );
+        slider.value = time;
       }
-    })
+    });
   }
 
   onInput(ev) {
-    audio.currentTime = ev.target.value
-    this.setState({ audioTime: ev.target.value })
+    audio.currentTime = ev.target.value;
+    this.setState({ audioTime: ev.target.value });
   }
 
-  togglePlay(ev, song, uri) {
-    setupAudio()
+  async togglePlay(ev, song, uri) {
+    setupAudio();
     if (!audioVisible) {
-      audioVisible = true
-      document.getElementsByTagName('body')[0].appendChild(audio)
+      audioVisible = true;
+      document.getElementsByTagName("body")[0].appendChild(audio);
     }
     if (this.state.currentSong.id && this.state.currentSong.id === song.id) {
       if (audio.paused) {
@@ -125,10 +126,16 @@ class AllSongs extends Component {
       audio.load();
       audio.play();
       this.setState({ currentSong: song, paused: false });
-      storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
-        from: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
-        value: 10 ** 16
-      });
+      try {
+        await storehash.methods
+          .payArtist(this.state.currentSong.ethAddress)
+          .send({
+            from: "0x57bCe2c9311Dd15A14Fc5df64aDE56F41B2B5009",
+            value: 10 ** 16
+          });
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
@@ -148,15 +155,15 @@ class AllSongs extends Component {
             {this.props.songs.map(song => {
               return (
                 <Song
-                key={song.hash}
-                song={song}
-                togglePlay={this.togglePlay}
-                currentSong={this.state.currentSong}
-                audioTime={this.state.audioTime}
-                audioDuration={this.state.audioDuration}
-                onInput={this.onInput}
-                paused={this.state.paused}
-              />
+                  key={song.id}
+                  song={song}
+                  togglePlay={this.togglePlay}
+                  currentSong={this.state.currentSong}
+                  audioTime={this.state.audioTime}
+                  audioDuration={this.state.audioDuration}
+                  onInput={this.onInput}
+                  paused={this.state.paused}
+                />
               );
             })}
           </tbody>

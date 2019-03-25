@@ -25,19 +25,22 @@ const songs = [
     title: "Liquid Eyes",
     artist: "Leo LePuq (aka Vivaldi)",
     genre: "Classical",
-    hash: "QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N" // Vivaldi sonata Emin
+    hash: "QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N", // Vivaldi sonata Emin
+    ethAdress: "0x035A64D5081e19c5461c413Ae05f112576924097"
   },
   {
     title: "Fangtime Fantasia (theme from Love Bites)",
     artist: "Jamie Masterson (aka Haydn)",
     genre: "Classical",
-    hash: "QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe" // Haydn Cello concerto Dmaj
+    hash: "QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe", // Haydn Cello concerto Dmaj
+    ethAdress: "0x035A64D5081e19c5461c413Ae05f112576924097"
   },
   {
     title: "Baby, You Float My Duck",
     artist: "Big Daddy Lobo Martinez (aka tschaikovsky)",
     genre: "Classical",
-    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi" // Tschaikovsky Rococco Variations
+    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi", // Tschaikovsky Rococco Variations
+    ethAdress: "0x035A64D5081e19c5461c413Ae05f112576924097"
   }
 ];
 
