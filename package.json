@@ -5,7 +5,7 @@
   "scripts": {
     "build-client": "webpack -p",
     "deploy": "script/deploy",
-    "start": "node main.js",
+    "start": "node server",
     "start-dev": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
     "build-watch": "webpack -w",
     "seed": "node script/seed.js",
