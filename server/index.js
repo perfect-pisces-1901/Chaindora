@@ -8,7 +8,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
 const sessionStore = new SequelizeStore({db});
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 module.exports = app;
 
 passport.serializeUser((user, done) => done(null, user.id));
