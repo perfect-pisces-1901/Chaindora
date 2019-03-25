@@ -1,11 +1,10 @@
 const Sequelize = require("sequelize");
-const db = require("../index");
+const db = require("../db");
 const crypto = require("crypto");
 
 const User = db.define("user", {
   name: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   email: {
     type: Sequelize.STRING,
@@ -35,9 +34,6 @@ const User = db.define("user", {
     get() {
       return () => this.getDataValue("salt");
     }
-  },
-  googleId: {
-    type: Sequelize.STRING
   }
 });
 

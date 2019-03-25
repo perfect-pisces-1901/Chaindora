@@ -13,9 +13,8 @@ contract Contract {
   }
 
   function payArtist(address payable artist) payable public {
-
-
 }
+
 }
 
 

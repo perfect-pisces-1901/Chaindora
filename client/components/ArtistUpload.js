@@ -25,6 +25,7 @@ class ArtistUpload extends Component {
     this.state = {
       songName: "",
       genre: "",
+      songFile: "",
       imageUrl:
         "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
       ipfsHash: null,
@@ -41,12 +42,13 @@ class ArtistUpload extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   //Take file input from user
-  captureFile(event) {
+  async captureFile(event) {
     event.stopPropagation();
     event.preventDefault();
     console.log("FILES ARE: ", event.target.files);
     const file = event.target.files[0];
     console.log("FILE IS: ", file);
+    await this.setState({songFile: file.name});
     let reader = new window.FileReader();
     console.log("READER IS: ", reader);
     reader.readAsArrayBuffer(file);
@@ -167,11 +169,12 @@ class ArtistUpload extends Component {
                         </Button>
                       </label>
                       <br />
+                      <p>{this.state.songFile}</p>
                       <input
                         id="uploadAlbumArtwork"
                         type="file"
                         style={{ display: "none" }}
-                        onChange={this.captureFile}
+                        onChange={this.captureArtwork}
                       />
                       <label htmlFor="uploadAlbumArtwork">
                         <Button style={buttonStyle} component="span">

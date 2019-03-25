@@ -5,7 +5,7 @@ const User = require("../server/db/models/User");
 const Album = require("../server/db/models/Album");
 const Playlist = require("../server/db/models/Playlist");
 
-const Users = [
+const users = [
   {
     name: "cody",
     email: "cody@email.com",
@@ -44,7 +44,7 @@ const songs = [
 const seed = () =>
   Promise.all(
     songs.map(song => Song.create(song)),
-    Users.map(user => User.create(user)),
+    users.map(user => User.create(user)),
     Album,
     Playlist
   );
