@@ -5,8 +5,8 @@
   "scripts": {
     "build-client": "webpack -p",
     "deploy": "script/deploy",
-    "start": "node index.js",
-    "start-dev": "npm run build-watch & nodemon --watch server server/index.js -e html,js,css",
+    "start": "node main.js",
+    "start-dev": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
     "build-watch": "webpack -w",
     "seed": "node script/seed.js",
     "test": "NODE_ENV=test mocha {server,client}/**/*.test.js --require @babel/polyfill --require @babel/register"
