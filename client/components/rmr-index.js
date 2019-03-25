@@ -96,25 +96,31 @@ export default class ReactMediaRecorder extends React.Component {
   }
 
   componentDidMount = async () => {
+    console.log('componentDidMount before getMediaStream')
     const stream = await this.getMediaStream();
+    console.log('componentDidMount after getMediaStream', stream)
 
     if (stream) {
+      console.log('componentDidMount have stream')
       stream
         .getAudioTracks()
         // eslint-disable-next-line no-return-assign
         .forEach(track => (track.enabled = !this.props.muted));
       this.stream = stream;
     }
-    this.stopRecording()
+    console.log('componentDidMount after check for stream')
   };
+
   componentDidUpdate = prevProps => {
     if (prevProps.muted !== this.props.muted) {
+      console.log('componentDidUpdate mute change')
       this.stream
         .getAudioTracks()
         // eslint-disable-next-line no-return-assign
         .forEach(track => (track.enabled = !this.props.muted));
     }
     if (this.stream) {
+      console.log('componentDidUpdate have stream')
       const isMuted = !this.stream
         .getAudioTracks()
         .every(track => track.enabled);
@@ -129,6 +135,7 @@ export default class ReactMediaRecorder extends React.Component {
         }));
       }
     }
+    console.log('componentDidUpdate after stream check')
   };
 
   componentWillUnmount = () => {
@@ -155,6 +162,8 @@ export default class ReactMediaRecorder extends React.Component {
   };
 
   getMediaStream = async () => {
+    console.log('getMediaStream')
+    return undefined
     try {
       const stream = await window.navigator.mediaDevices.getUserMedia(
         this.requiredMedia
@@ -289,7 +298,7 @@ export default class ReactMediaRecorder extends React.Component {
   };
 
   stopRecording = (f) => {
-    console.log('RMR: STOP RECORDING')
+    console.log('RMR: STOP RECORDING rec', this.mediaRecorder, this.mediaRecorder && this.mediaRecorder.state)
     this.onStop = f
     if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
       this.mediaRecorder.stop();
