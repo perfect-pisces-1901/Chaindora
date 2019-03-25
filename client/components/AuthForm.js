@@ -12,54 +12,22 @@ const AuthForm = props => {
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
         <h1 className="title">Please {displayName}</h1>
-        {displayName === 'Login' ? (
-          <div>
-            <TextField
-              required
-              type="text"
-              name="email"
-              id="standard-name"
-              label="email"
-              margin="normal"
-            />
-            <TextField
-              required
-              type="password"
-              name="password"
-              id="standard-name"
-              label="password"
-              margin="normal"
-            />
-          </div>
-        ) : (
-          <div>
-            <TextField
-              required
-              type="text"
-              name="name"
-              id="standard-name"
-              label="name"
-              margin="normal"
-            />
-            <TextField
-              required
-              type="text"
-              name="email"
-              id="standard-name"
-              label="email"
-              margin="normal"
-            />
-            <TextField
-              required
-              type="password"
-              name="password"
-              id="standard-name"
-              label="password"
-              margin="normal"
-            />
-          </div>
-        )}
-
+          <TextField
+            required
+            type="text"
+            name="email"
+            id="standard-name"
+            label="email"
+            margin="normal"
+          />
+          <TextField
+            required
+            type="password"
+            name="password"
+            id="standard-name"
+            label="password"
+            margin="normal"
+          />
         <div>
           <Button type="submit" variant="contained" color="primary">
             {displayName}&ensp;
