@@ -1,10 +1,10 @@
 #canvas {
     display: flex;
-    /* justify-self: center; */
+    justify-content: center;
     z-index: -1;
     position: absolute;
     bottom: 0px;
-    height: 100vh;
-    width: 100vh;
+    height: 200vh;
+    width: 200vw;
     opacity: 0.8;
 }

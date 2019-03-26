@@ -144,7 +144,7 @@ class AllSongs extends Component {
     return (
       <div>
         <audio controls={true} ref='audio' />
-        <canvas height='300' width='2000' id="canvas" ref="canvas" />
+        <canvas height='300' width='300' id="canvas" ref="canvas" />
         <h2>Chaindora Catalog</h2>
         <table id="songs">
           <tbody>
