@@ -6,7 +6,7 @@
     "build-client": "webpack -p",
     "deploy": "script/deploy",
     "start": "node server",
-    "start-dev": "npm run build-watch & nodemon --watch server main.js -e html,js,css",
+    "start-dev": "npm run build-watch & nodemon --watch server server -e html,js,css",
     "build-watch": "webpack -w",
     "seed": "node script/seed.js",
     "heroku-token": "script/encrypt-heroku-auth-token",
