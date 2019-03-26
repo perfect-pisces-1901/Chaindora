@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from '@material-ui/core/Typography'
+import jspdf from "jspdf";
 
 const buttonStyle = {
   background: "#C4F0C5",
@@ -20,6 +21,8 @@ const buttonStyle = {
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
 };
 
+const pdf = new jspdf();
+
 class ArtistUpload extends Component {
   constructor() {
     super();
@@ -29,7 +32,7 @@ class ArtistUpload extends Component {
       songFile: "",
       imageUrl:
         "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
-      ipfsHash: null,
+      ipfsHash: "",
       buffer: "",
       ethAddress: "",
       transactionHash: "",
@@ -41,7 +44,36 @@ class ArtistUpload extends Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.downloadpdf = this.downloadpdf.bind(this);
   }
+
+  downloadpdf() {
+    pdf.setFontSize(22);
+    pdf.text(
+      10,
+      10,
+      `
+                             Your Upload Receipt`
+    );
+    pdf.setFontSize(16);
+    pdf.text(
+      10,
+      30,
+      `    Song Name : ${this.state.songName}
+
+    Song Upload Hash: 
+    ${this.state.ipfsHash}
+    Contract Address: 
+    ${this.state.ethAddress}
+    Transaction: 
+    ${this.state.transactionHash}`
+    );
+
+    pdf.setTextColor(100);
+    // pdf.addImage(this.state.imageUrl, "JPG", 80, 40, 50, 50);
+    pdf.save("Transaction_Receipt");
+  }
+
   //Take file input from user
   async captureFile(event) {
     event.stopPropagation();
@@ -127,8 +159,9 @@ class ArtistUpload extends Component {
       await axios.post(`/api/songs`, song);
     });
   }
+
   render() {
-    console.log("IMAGE URL:", this.state.imageUrl)
+    console.log("IMAGE URL:", this.state.imageUrl);
     return (
       <div className="App">
         <div id="artistform">
@@ -197,7 +230,7 @@ class ArtistUpload extends Component {
             </div>
           </div>
           <hr />
-          <Button style={buttonStyle} onClick={this.onClick}>
+          <Button style={buttonStyle} onClick={this.downloadpdf}>
             {" "}
             Get Transaction Receipt{" "}
           </Button>

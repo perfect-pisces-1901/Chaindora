@@ -6,6 +6,10 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import Button from "@material-ui/core/Button";
 import history from "../history";
 import { withRouter } from "react-router-dom";
+var ethUtil = require("ethereumjs-util");
+// var sigUtil = require("eth-sig-util");
+var Eth = require("ethjs");
+window.Eth = Eth;
 
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
@@ -62,6 +66,9 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt, name) {
       evt.preventDefault();
+      if (typeof ethereum !== "undefined") {
+        ethereum.enable();
+      }
       const formName = name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
