@@ -18,6 +18,7 @@ class AllSongs extends Component {
     this.onInput = this.onInput.bind(this);
     this.setupAudio = this.setupAudio.bind(this);
     this.drawVisualizerFrame = this.drawVisualizerFrame.bind(this);
+    this.resizeCanvas = this.resizeCanvas.bind(this)
     this.audioCtx = new AudioContext();
     this.analyser = this.audioCtx.createAnalyser();
     this.source = {};
@@ -40,7 +41,13 @@ class AllSongs extends Component {
         slider.value = time
       }
     })
+    this.refs.canvas.addEventListener('resize', this.resizeCanvas, false)
     this.canvasCtx = this.refs.canvas.getContext('2d');
+  }
+
+  resizeCanvas() {
+    this.refs.canvas.width = window.innerWidth
+    this.refs.canvas.height = window.innerHeight
   }
 
   setupAudio() {
@@ -139,7 +146,7 @@ class AllSongs extends Component {
     return (
       <div>
         <audio controls={true} ref='audio' />
-        <canvas height='300' width='300' id="canvas" ref="canvas" />
+        <canvas height='300' width='1000' id="canvas" ref="canvas" />
         <h2>Chaindora Catalog</h2>
         <table id="songs">
           <tbody>
