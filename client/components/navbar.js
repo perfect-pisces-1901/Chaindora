@@ -16,6 +16,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <br />
         <NavLink className="link" to="/songs">Listen</NavLink>
         <br />
+        <NavLink className="link" to="/record">Record</NavLink>
+        <br />
         <NavLink className="link" to="/user-profile">Profile</NavLink>
         <br />
         <a href="#" className="link" onClick={handleClick}>
