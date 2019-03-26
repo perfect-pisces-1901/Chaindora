@@ -4,7 +4,7 @@
 /* eslint-disable quote-props */
 import web3 from "./web3";
 //Your contract address
-const address = "0xd7b90C5315CD69798c7a0813126C6D4408AeEDa0";
+const address = "0xf89CA77171A11f382a9A039609472F2a57486781";
 const abi = [
   {
     constant: true,
