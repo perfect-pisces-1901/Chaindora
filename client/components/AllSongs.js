@@ -3,7 +3,6 @@ import { getSongs } from "../reducers/songsReducer";
 import { connect } from "react-redux";
 import Song from "./Song.js";
 import storehash from "../../src/storehash";
-
 class AllSongs extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +24,6 @@ class AllSongs extends Component {
     // this.canvasCtx = this.refs.canvas.getContext('2d');
     // this.audioRef = React.createRef()
   }
-
   componentDidMount() {
     this.props.getSongs();
     this.refs.audio.addEventListener('durationchange', () => {
@@ -45,12 +43,10 @@ class AllSongs extends Component {
     this.refs.canvas.addEventListener('resize', this.resizeCanvas, false)
     this.canvasCtx = this.refs.canvas.getContext('2d');
   }
-
   resizeCanvas() {
     this.refs.canvas.width = window.innerWidth
     this.refs.canvas.height = window.innerHeight
   }
-
   setupAudio() {
     // let audioVisible = false;
       // const audioCtx = new AudioContext();
@@ -72,13 +68,12 @@ class AllSongs extends Component {
       // else find way to update or reassing to includethis.refs.audio
       this.source.connect(this.analyser);
       this.analyser.connect(this.audioCtx.destination)
-      this.analyser.fftSize = 32;
+      this.analyser.fftSize = 32768;
       const bufferLength = this.analyser.frequencyBinCount;
       // const canvas = document.getElementById('canvas');
       // const canvasCtx = canvas.getContext('2d');
       this.drawVisualizerFrame(bufferLength, this.analyser, this.canvasCtx, this.refs.canvas)
   }
-
   drawVisualizerFrame(bufferLength, analyser, canvasCtx, canvas) {
     // eslint-disable-next-line no-unused-vars
     requestAnimationFrame(() => this.drawVisualizerFrame(bufferLength, analyser, canvasCtx, canvas));
@@ -93,23 +88,21 @@ class AllSongs extends Component {
     let x = 0;
     for (let i = 0; i < bufferLength; i++) {
       const v = dataArray[i] / 128.0;
-      const y = v * canvas.height / 2;
+      const y = v * canvas.height;
       if (i === 0) {
-        canvasCtx.moveTo(x, y + 100);
+        canvasCtx.moveTo(x, y);
       } else {
-        canvasCtx.lineTo(x, y + 100);
+        canvasCtx.lineTo(x, y);
       }
       x += sliceWidth;
     }
     canvasCtx.lineTo(canvas.width, canvas.height / 2);
     canvasCtx.stroke();
   }
-
   onInput(ev) {
     this.refs.audio.currentTime = ev.target.value
     this.setState({ audioTime: ev.target.value })
   }
-
   async togglePlay(ev, song, uri) {
     this.setupAudio()
     // if (!audioVisible) {
@@ -139,7 +132,6 @@ class AllSongs extends Component {
       }
     }
   }
-
   render() {
     return (
       <div>
@@ -175,15 +167,12 @@ class AllSongs extends Component {
     );
   }
 }
-
 const mapStateToProps = state => ({
   songs: state.songs
 });
-
 const mapDispatchToProps = dispatch => ({
   getSongs: () => dispatch(getSongs())
 });
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
