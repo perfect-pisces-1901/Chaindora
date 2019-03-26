@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div id="navbar" className="navbar">
     <NavLink className="link1" to="/">
-      <img height='100' src='/chaindora-logo.png'/>
+      <h3>LOGO</h3>
     </NavLink>
     {isLoggedIn ? (
       <div className="row">

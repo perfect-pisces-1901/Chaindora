@@ -1,11 +1,8 @@
 #canvas {
-    display: flex;
-    justify-self: flex-start;
-    position: fixed;
-    z-index: -1;
-    top: 0px;
+    position: absolute;
     bottom: 0px;
-    height: 100vh;
-    width: 100vw;
+    z-index: -1;
     opacity: 0.8;
+    height: 200%;
+    /* pointer-events: none; */
 }
