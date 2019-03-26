@@ -1,9 +1,10 @@
 #canvas {
     display: flex;
+    /* justify-self: center; */
+    z-index: -1;
     position: absolute;
     bottom: 0px;
     height: 100vh;
     width: 100vh;
-    z-index: -1;
     opacity: 0.8;
 }
