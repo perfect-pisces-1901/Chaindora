@@ -20,11 +20,11 @@ class Routes extends Component {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/profile" component={ArtistProfile} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/user-profile" component={ArtistProfile} />
             <Route path="/songs" component={AllSongs} />
             <Route path="/upload" component={ArtistUpload} />
           </Switch>
