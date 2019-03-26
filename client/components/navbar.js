@@ -6,7 +6,7 @@ import { logout } from "../reducers/userReducer";
 import { withRouter } from "react-router-dom";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div id="navbar" className="row">
+  <div id="navbar" className="navbar">
     <NavLink className="link1" to="/">
       <h3>LOGO</h3>
     </NavLink>
