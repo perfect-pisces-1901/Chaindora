@@ -65,6 +65,9 @@ export default class AudioRecorder extends React.Component {
                 <button type="button" className="delete" onClick={() => this.deleteClip(clip.id)}>
                   Delete
                 </button>
+                <button type="button" className="upload" onClick={() => this.upload(clip.id)}>
+                  Upload
+                </button>
               </article>
             )
           })
