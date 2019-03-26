@@ -9,10 +9,10 @@
 }
 
 .link {
-  margin-left: 1em;
+  padding: 0.5em;
 }
 
-.linkUpload {
+/* .linkUpload {
   margin-left: 1em;
 }
 
@@ -22,4 +22,4 @@
 
 .link3 {
   margin-left: 1em;
-}
+} */
