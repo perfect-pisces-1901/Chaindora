@@ -3,6 +3,7 @@ import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import AllSongs from "./components/AllSongs";
 import { Login, Signup } from "./components/AuthForm";
 import ArtistUpload from "./components/ArtistUpload";
+import ArtistProfile from "./components/ArtistProfile";
 import HomePage from "./components/HomePage";
 import { me } from "./reducers/userReducer";
 import { connect } from "react-redux";

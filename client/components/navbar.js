@@ -10,7 +10,6 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     <NavLink className="link1" to="/">
       <h3>LOGO</h3>
     </NavLink>
-<<<<<<< HEAD
     <nav>
       {isLoggedIn ? (
         <div className="row">
@@ -33,34 +32,6 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       )}
     </nav>
     <hr />
-=======
-
-    {isLoggedIn ? (
-      <div className="row">
-        <NavLink className="linkUpload" to="/upload">
-          Upload
-        </NavLink>
-        <br />
-        <NavLink className="link" to="/songs">
-          Listen
-        </NavLink>
-        <br />
-        <a href="#" onClick={handleClick} className="link">
-          Logout
-        </a>
-      </div>
-    ) : (
-      <div className="row">
-        <NavLink className="link2" to="/login">
-          Login
-        </NavLink>
-        <br />
-        <NavLink className="link3" to="/signup">
-          Sign Up
-        </NavLink>
-      </div>
-    )}
->>>>>>> master
   </div>
 );
 
