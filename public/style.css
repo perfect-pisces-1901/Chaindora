@@ -50,10 +50,35 @@ a {
   color: #929aab;
 } */
 
-audio {
+/* audio {
   height: 0px;
+} */
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+.main-controls {
+  padding: 0.5rem 0;
+}
+
+/*<<<<<<< f/upload_recorded_audio*/
+canvas {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sound-clips {
+  flex: 1;
+  overflow: auto;
+}
+
+i, audio {
+  outline: none
+}
+/*=======*/
 div.row {
   display: flex;
   flex-direction: row;
@@ -74,3 +99,4 @@ form {
   margin-left: 15em;
   margin-top: 2em;
 }
+/*>>>>>>> master*/
