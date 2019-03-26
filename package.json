@@ -29,7 +29,7 @@
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
-    "ipfs-api": "^26.1.2",
+    "ipfs-http-client": "^30.1.0",
     "passport": "^0.4.0",
     "pg": "^7.8.2",
     "pg-hstore": "^2.3.2",

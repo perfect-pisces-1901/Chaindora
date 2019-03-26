@@ -57,13 +57,14 @@ export default class AudioRecorder extends React.Component {
     console.log('uploadClip ', clip, clip.blob)
     const reader = new FileReader()
     reader.onload = async () => {
-      await this.uploadClipToCloud(clip.name, reader.result)
+      const buffer = await Buffer.from(reader.result)
+      await this.uploadClipToCloud(clip.name, buffer)
     }
     reader.readAsArrayBuffer(clip.blob)
   }
 
-  async uploadClipToCloud(name, array) {
-    console.log('uploadClipToCloud', array)
+  async uploadClipToCloud(name, buffer) {
+    console.log('uploadClipToCloud', buffer)
     const accounts = await web3.eth.getAccounts();
     console.log('uploadClipToCloud accounts', accounts);
     //obtain contract address from storehash.js
@@ -71,7 +72,7 @@ export default class AudioRecorder extends React.Component {
     this.setState({ ethAddress });
     console.log('uploadClipToCloud ethadd', ethAddress)
     // eslint-disable-next-line handle-callback-err
-    await ipfs.add(array, async (err, ipfsHash) => {
+    await ipfs.add(buffer, async (err, ipfsHash) => {
       console.log('uploadClipToCloud ipfsHash err [', 'moo', ']');
       this.setState({ ipfsHash: ipfsHash[0].hash });
       storehash.methods.setHash(this.state.ipfsHash).send(
