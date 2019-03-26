@@ -10,12 +10,13 @@ import { withStyles } from "@material-ui/core/styles";
 // import Typography from '@material-ui/core/Typography'
 
 const buttonStyle = {
-  background: '#C4F0C5',
+  background: "#C4F0C5",
   borderRadius: 3,
   border: 0,
   color: "white",
   height: 48,
-  padding: "0 30px",
+  width: 250,
+  padding: "1000 30px",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
 };
 
@@ -48,7 +49,7 @@ class ArtistUpload extends Component {
     console.log("FILES ARE: ", event.target.files);
     const file = event.target.files[0];
     console.log("FILE IS: ", file);
-    await this.setState({songFile: file.name});
+    await this.setState({ songFile: file.name });
     let reader = new window.FileReader();
     console.log("READER IS: ", reader);
     reader.readAsArrayBuffer(file);
@@ -57,13 +58,13 @@ class ArtistUpload extends Component {
   async captureArtwork(event) {
     event.stopPropagation();
     event.preventDefault();
-    console.log('FILES ARE: ', event.target.files)
+    console.log("FILES ARE: ", event.target.files);
     const file = event.target.files[0];
-    console.log('FILE IS: ', file)
-    await this.setState({imageUrl: URL.createObjectURL(file)})
-    console.log('STATE', this.state.imageUrl)
+    console.log("FILE IS: ", file);
+    await this.setState({ imageUrl: URL.createObjectURL(file) });
+    console.log("STATE", this.state.imageUrl);
     let reader = new window.FileReader();
-    console.log('READER IS: ', reader)
+    console.log("READER IS: ", reader);
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => this.convertToBuffer(reader);
   }
