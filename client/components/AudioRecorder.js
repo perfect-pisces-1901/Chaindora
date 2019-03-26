@@ -1,15 +1,24 @@
 import React from 'react'
 import { ReactMic } from 'react-mic';
+import storehash from '../../src/storehash';
+import ipfs from '../../src/ipfs';
+import web3 from '../../src/web3';
+import axios from 'axios';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ethAddress: '',
+      ipfsHash: '',
+      transactionHash: '',
       record: false,
       clips: []
     }
     this.onStop = this.onStop.bind(this)
-    this.deleteClip = this.deleteClip.bind(this)
+    this.deleteClipBtn = this.deleteClipBtn.bind(this)
+    this.uploadClipBtn = this.uploadClipBtn.bind(this)
+    this.uploadClipToCloud = this.uploadClipToCloud.bind(this)
   }
 
   startRecording = () => {
@@ -24,8 +33,9 @@ export default class AudioRecorder extends React.Component {
     });
   }
 
-  onData(recordedBlob) {
-    console.log('chunk of real-time data is: ', recordedBlob);
+  // eslint-disable-next-line no-unused-vars
+  onData(_recordedBlob) {
+    //console.log('chunk of real-time data is: ', recordedBlob);
   }
 
   onStop(recordedBlob) {
@@ -34,12 +44,54 @@ export default class AudioRecorder extends React.Component {
     const clipName = prompt('Enter a name for your sound clip?', 'My unnamed clip') || 'My clip'
     const url = recordedBlob.blobURL
     const id = url.slice(url.lastIndexOf('/') + 1) // blob:http://<hostname>/<id>
-    const clip = { id: id, name: clipName, url: url }
+    const clip = { id: id, name: clipName, url: url, blob: recordedBlob.blob }
     this.setState((prevState) => ({...prevState, clips: [...prevState.clips, clip]}))
   }
 
-  deleteClip(clipId) {
+  deleteClipBtn(clipId) {
     this.setState((prevState) => ({...prevState, clips: prevState.clips.filter(c => c.id !== clipId)}))
+  }
+
+  uploadClipBtn(clipId) {
+    const clip = this.state.clips.find(c => c.id === clipId)
+    console.log('uploadClip ', clip, clip.blob)
+    const reader = new FileReader()
+    reader.onload = async () => {
+      await this.uploadClipToCloud(clip.name, reader.result)
+    }
+    reader.readAsArrayBuffer(clip.blob)
+  }
+
+  async uploadClipToCloud(name, array) {
+    console.log('uploadClipToCloud', array)
+    const accounts = await web3.eth.getAccounts();
+    console.log('uploadClipToCloud accounts', accounts);
+    //obtain contract address from storehash.js
+    const ethAddress = await storehash.options.address;
+    this.setState({ ethAddress });
+    console.log('uploadClipToCloud ethadd', ethAddress)
+    // eslint-disable-next-line handle-callback-err
+    await ipfs.add(array, async (err, ipfsHash) => {
+      console.log('uploadClipToCloud ipfsHash err [', 'moo', ']');
+      this.setState({ ipfsHash: ipfsHash[0].hash });
+      storehash.methods.setHash(this.state.ipfsHash).send(
+        {
+          from: accounts[0]
+        },
+        (error, transactionHash) => {
+          console.log(error);
+          this.setState({ transactionHash });
+        }
+      );
+      const song = {
+        ipfsHash,
+        title: name,
+        genre: 'GENRE',
+        ethAddress: accounts[0]
+      };
+      await axios.post(`/api/songs`, song);
+    });
+
   }
 
   render() {
@@ -62,10 +114,10 @@ export default class AudioRecorder extends React.Component {
               <article key={clip.id} className="clip">
                 <audio controls={true} src={clip.url} />
                 <p className="clipLabel">{clip.name}</p>
-                <button type="button" className="delete" onClick={() => this.deleteClip(clip.id)}>
+                <button type="button" className="delete" onClick={() => this.deleteClipBtn(clip.id)}>
                   Delete
                 </button>
-                <button type="button" className="upload" onClick={() => this.upload(clip.id)}>
+                <button type="button" className="upload" onClick={() => this.uploadClipBtn(clip.id)}>
                   Upload
                 </button>
               </article>
