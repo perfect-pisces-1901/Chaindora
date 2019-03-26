@@ -1,6 +1,6 @@
 * {
   font-family: "Raleway", sans-serif;
-  color:#929aab;
+  color: #929aab;
 }
 
 body {
@@ -64,6 +64,7 @@ a {
   padding: 0.5rem 0;
 }
 
+/*<<<<<<< f/upload_recorded_audio*/
 canvas {
   display: block;
   margin-bottom: 0.5rem;
@@ -77,3 +78,25 @@ canvas {
 i, audio {
   outline: none
 }
+/*=======*/
+div.row {
+  display: flex;
+  flex-direction: row;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  width: 40%;
+  margin-top: 90px;
+  /* margin: 5px auto 5px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#submit {
+  margin-left: 15em;
+  margin-top: 2em;
+}
+/*>>>>>>> master*/

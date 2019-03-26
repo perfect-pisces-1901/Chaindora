@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import {me} from './reducers/userReducer';
 import {connect} from 'react-redux';
 import AudioRecorder from './components/AudioRecorder';
+import ArtistProfile from "./components/ArtistProfile";
 
 class Routes extends Component {
   componentDidMount() {
@@ -18,12 +19,15 @@ class Routes extends Component {
 
     return (
       <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/user-profile" component={ArtistProfile} />
             <Route path="/songs" component={AllSongs} />
             <Route path="/upload" component={ArtistUpload} />
             <Route path="/record" component={AudioRecorder} />
@@ -40,12 +44,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser(){
-    dispatch(me())
-  },
+  getUser() {
+    dispatch(me());
+  }
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Routes))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Routes)
+);

@@ -1,9 +1,30 @@
-#navbar {
+.navbar {
+  /* position: relative; */
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
 }
 
 .link {
-  padding: 1%;
+  padding: 0.5em;
 }
+
+.link:hover {
+  color: #c4f0c5;
+  transition: all linear 0.15s;
+}
+
+/* .linkUpload {
+  margin-left: 1em;
+}
+
+.link2 {
+  margin-left: 1em;
+}
+
+.link3 {
+  margin-left: 1em;
+} */
