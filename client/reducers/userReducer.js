@@ -1,11 +1,11 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
 /**
  * ACTION TYPES
  */
-const GET_USER = 'GET_USER';
-const REMOVE_USER = 'REMOVE_USER';
+const GET_USER = "GET_USER";
+const REMOVE_USER = "REMOVE_USER";
 
 /**
  * INITIAL STATE
@@ -23,9 +23,13 @@ const removeUser = () => ({ type: REMOVE_USER });
  */
 export const me = () => async dispatch => {
   try {
+<<<<<<< HEAD
     console.log("HITS ME THUNK")
     const res = await axios.get('/auth/me');
     console.log("THIS IS THE RES FROM THUNK:", res.data);
+=======
+    const res = await axios.get("/auth/me");
+>>>>>>> 83b6fa20451a55d302fc7a43507a50746934b44b
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
@@ -42,7 +46,7 @@ export const auth = (name, email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data));
-    history.push('/');
+    history.push("/home");
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -50,9 +54,9 @@ export const auth = (name, email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post('/api/auth/logout');
+    await axios.post("/api/auth/logout");
     dispatch(removeUser());
-    history.push('/login');
+    history.push("/home");
   } catch (err) {
     console.error(err);
   }
