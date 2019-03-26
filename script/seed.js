@@ -5,7 +5,7 @@ const User = require("../server/db/models/User");
 const Album = require("../server/db/models/Album");
 const Playlist = require("../server/db/models/Playlist");
 
-const Users = [
+const users = [
   {
     name: "cody",
     email: "cody@email.com",
@@ -25,26 +25,29 @@ const songs = [
     title: "Liquid Eyes",
     artist: "Leo LePuq (aka Vivaldi)",
     genre: "Classical",
-    hash: "QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N" // Vivaldi sonata Emin
+    hash: "QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N",
+    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097" // Vivaldi sonata Emin
   },
   {
     title: "Fangtime Fantasia (theme from Love Bites)",
     artist: "Jamie Masterson (aka Haydn)",
     genre: "Classical",
-    hash: "QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe" // Haydn Cello concerto Dmaj
+    hash: "QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe",
+    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097" // Haydn Cello concerto Dmaj
   },
   {
     title: "Baby, You Float My Duck",
     artist: "Big Daddy Lobo Martinez (aka tschaikovsky)",
     genre: "Classical",
-    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi" // Tschaikovsky Rococco Variations
+    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi",
+    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097" // Tschaikovsky Rococco Variations
   }
 ];
 
 const seed = () =>
   Promise.all(
     songs.map(song => Song.create(song)),
-    Users.map(user => User.create(user)),
+    users.map(user => User.create(user)),
     Album,
     Playlist
   );

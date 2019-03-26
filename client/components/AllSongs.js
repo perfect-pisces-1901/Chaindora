@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { getSongs } from '../reducers/songsReducer';
-import { connect } from 'react-redux';
-import Song from './Song.js';
+import React, { Component } from "react";
+import { getSongs } from "../reducers/songsReducer";
+import { connect } from "react-redux";
+import Song from "./Song.js";
+import storehash from "../../src/storehash";
 
 let counter = 0;
 
@@ -37,8 +38,10 @@ class AllSongs extends Component {
       const time = parseInt(this.refs.audio.currentTime, 10);
       this.setState({ audioTime: time })
       if (this.state.currentSong.hash) {
-        const slider = document.getElementById(`playback_control_${this.state.currentSong.hash}`)
-        slider.value = time
+        const slider = document.getElementById(
+          `playback_control_${this.state.currentSong.hash}`
+        );
+        slider.value = time;
       }
     })
     this.refs.canvas.addEventListener('resize', this.resizeCanvas, false)
@@ -116,7 +119,7 @@ class AllSongs extends Component {
     this.setState({ audioTime: ev.target.value })
   }
 
-  togglePlay(ev, song, uri) {
+  async togglePlay(ev, song, uri) {
     this.setupAudio()
     // if (!audioVisible) {
     //   audioVisible = true
@@ -134,11 +137,15 @@ class AllSongs extends Component {
       this.refs.audio.src = uri;
       this.refs.audio.load();
       this.refs.audio.play();
-      this.setState({ currentSong: song, paused: false });
-      // storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
-      //   from: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
-      //   value: 10 ** 16
-      // });
+      try {
+        await this.setState({ currentSong: song, paused: false });
+        storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
+          from: "0x57bCe2c9311Dd15A14Fc5df64aDE56F41B2B5009",
+          value: 10 ** 16
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -159,15 +166,15 @@ class AllSongs extends Component {
             {this.props.songs.map(song => {
               return (
                 <Song
-                key={song.hash}
-                song={song}
-                togglePlay={this.togglePlay}
-                currentSong={this.state.currentSong}
-                audioTime={this.state.audioTime}
-                audioDuration={this.state.audioDuration}
-                onInput={this.onInput}
-                paused={this.state.paused}
-              />
+                  key={song.id}
+                  song={song}
+                  togglePlay={this.togglePlay}
+                  currentSong={this.state.currentSong}
+                  audioTime={this.state.audioTime}
+                  audioDuration={this.state.audioDuration}
+                  onInput={this.onInput}
+                  paused={this.state.paused}
+                />
               );
             })}
           </tbody>

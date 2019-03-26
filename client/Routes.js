@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import AllSongs from './components/AllSongs';
-import { Login, Signup } from './components/AuthForm';
-import ArtistUpload from './components/ArtistUpload';
-import HomePage from './components/HomePage';
-import {me} from './reducers/userReducer';
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import AllSongs from "./components/AllSongs";
+import { Login, Signup } from "./components/AuthForm";
+import ArtistUpload from "./components/ArtistUpload";
+import HomePage from "./components/HomePage";
+import { me } from "./reducers/userReducer";
+import { connect } from "react-redux";
 
 class Routes extends Component {
   componentDidMount() {
@@ -13,24 +13,23 @@ class Routes extends Component {
   }
 
   render() {
-    console.log("user is:", this.props.user)
     const { isLoggedIn } = this.props;
 
     return (
       <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={HomePage} />
         <Route path="/songs" component={AllSongs} />
-        <Route path="/upload" component={ArtistUpload} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/songs" component={AllSongs} />
+            <Route path="/home" component={HomePage} />
             <Route path="/upload" component={ArtistUpload} />
+            <Route path="/songs" component={AllSongs} />
           </Switch>
         )}
-        <Redirect to='/login' />
       </Switch>
     );
   }
@@ -42,12 +41,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser(){
-    dispatch(me())
-  },
+  getUser() {
+    dispatch(me());
+  }
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Routes))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Routes)
+);
