@@ -29,7 +29,7 @@ const AuthForm = props => {
           label="password"
           margin="normal"
         />
-        <div>
+        <div id="submit">
           <Button type="submit" variant="contained" color="primary">
             {displayName}&ensp;
             <SvgIcon>
@@ -37,6 +37,7 @@ const AuthForm = props => {
             </SvgIcon>
           </Button>
         </div>
+
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
