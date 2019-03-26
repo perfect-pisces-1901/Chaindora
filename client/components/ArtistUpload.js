@@ -128,6 +128,7 @@ class ArtistUpload extends Component {
     });
   }
   render() {
+    console.log("IMAGE URL:", this.state.imageUrl)
     return (
       <div className="App">
         <div id="artistform">

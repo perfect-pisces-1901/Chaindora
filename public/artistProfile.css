@@ -1,0 +1,34 @@
+#artist-profile-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#profile-div {
+  border-radius: 25px;
+  padding: 1rem;
+  margin: 3%;
+  border: 10px solid #c4f0c5;
+  background-color: #ffffffa6;
+}
+
+#artist-image {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  padding: 3%;
+}
+
+tr#artist-upload-history:hover {
+  background-color: #c4f0c5;
+  border-radius: 50%;
+}
+
+#user-song-img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.songHash {
+  font-size: 1em;
+}

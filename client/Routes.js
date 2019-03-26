@@ -3,6 +3,7 @@ import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import AllSongs from "./components/AllSongs";
 import { Login, Signup } from "./components/AuthForm";
 import ArtistUpload from "./components/ArtistUpload";
+import ArtistProfile from "./components/ArtistProfile";
 import HomePage from "./components/HomePage";
 import { me } from "./reducers/userReducer";
 import { connect } from "react-redux";
@@ -21,11 +22,12 @@ class Routes extends Component {
         <Route path="/home" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/songs" component={AllSongs} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/user-profile" component={ArtistProfile} />
+            <Route path="/songs" component={AllSongs} />
             <Route path="/upload" component={ArtistUpload} />
             <Route path="/songs" component={AllSongs} />
           </Switch>
