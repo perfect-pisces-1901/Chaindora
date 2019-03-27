@@ -13,12 +13,6 @@ const users = [
     password: "123"
   },
   {
-    name: "ines",
-    email: "ines.zenk@edhec.com",
-    isListener: true,
-    password: "azerty"
-  },
-  {
     name: "Testy McTesterson",
     email: "chaindora@test.com",
     isListener: true,
@@ -34,21 +28,24 @@ const songs = [
     artist: "Leo LePuq (aka Vivaldi)",
     genre: "Classical",
     hash: "QmavidEGRC2DBgVBkrUGuUVGJo2SsPWgKvYDoxWdMNFd7N",
-    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097" // Vivaldi sonata Emin
+    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097",
+    imageUrl: "http://2.bp.blogspot.com/-gwYc8WLQ3XA/Us7NnPAHReI/AAAAAAAAAX0/LIdW9PIXJWQ/s1600/(10)+blue+eye+on+water.jpg" // Vivaldi sonata Emin
   },
   {
     title: "Fangtime Fantasia (theme from Love Bites)",
     artist: "Jamie Masterson (aka Haydn)",
     genre: "Classical",
     hash: "QmfDzuLyd9mVyjej5TYdEKBbBEbiY6Q1fzhK4F817q1Zxe",
-    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097" // Haydn Cello concerto Dmaj
+    ethAddress: "0x035A64D5081e19c5461c413Ae05f112576924097",
+    imageUrl: "https://study.com/cimages/videopreview/videopreview-full/dracula_115156.jpg" // Haydn Cello concerto Dmaj
   },
   {
     title: "Baby, You Float My Duck",
     artist: "Big Daddy Lobo Martinez (aka tschaikovsky)",
     genre: "Classical",
     hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi", // Tschaikovsky Rococco Variations
-    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
+    imageUrl: "https://s3.distributorcentral.com/uploads/E/9/E95C79509FA17714E2BD8EBE028C18E5.jpg"
   },
   {
     title: "Testy Eyes",

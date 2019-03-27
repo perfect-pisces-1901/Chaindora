@@ -8,21 +8,30 @@ import history from "../history";
 
 import { withRouter, Link } from "react-router-dom";
 
-
-
 var ethUtil = require("ethereumjs-util");
 // var sigUtil = require("eth-sig-util");
 var Eth = require("ethjs");
 window.Eth = Eth;
 
+const buttonStyle = {
+  background: "#C4F0C5",
+  borderRadius: 3,
+  border: 0,
+  color: "white",
+  height: 48,
+  width: 250,
+  padding: "1000 30px"
+};
+
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error, isLoggedIn } = props;
   return (
     <div>
-      <form onSubmit={ev => handleSubmit(ev, name)} name={name} id="auth">
+      <form onSubmit={ev => handleSubmit(ev, name)} name={name} id="auth" className="auth-div">
         <h1 className="title">Please {displayName}</h1>
         <TextField
           required
+          className="auth-input"
           type="text"
           name="email"
           id="standard-name"
@@ -31,6 +40,7 @@ const AuthForm = props => {
         />
         <TextField
           required
+          className="auth-input"
           type="password"
           name="password"
           id="standard-name"
@@ -38,7 +48,7 @@ const AuthForm = props => {
           margin="normal"
         />
         <div id="submit">
-          <Button type="submit" variant="contained" color="primary">
+          <Button style={buttonStyle} type="submit" variant="contained" color="primary">
             {displayName}&ensp;
             <SvgIcon>
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -46,10 +56,10 @@ const AuthForm = props => {
           </Button>
         </div>
         {!isLoggedIn && (
-          <div>
+          <div id="account-div">
             {displayName === "Login" && (
               <div id="account">
-                Don’t have a account? <br />
+              Don’t have an account?<br />
                 <Link to="/signup" id="signup">
                   Sign up here!
                 </Link>

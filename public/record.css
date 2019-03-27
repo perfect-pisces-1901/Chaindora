@@ -39,3 +39,7 @@
   justify-content: flex-start;
   margin-left: 2%;
 }
+
+.sound-wave {
+  z-index: -3;
+}

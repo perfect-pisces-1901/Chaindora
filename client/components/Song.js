@@ -12,6 +12,7 @@ export default function Song(props) {
   const title = song.title
   const artist = song.artist
   const hash = song.hash
+  const genre = song.genre
   const imageUrl = song.imageUrl
   const uri = `https://gateway.ipfs.io/ipfs/${hash}`
   const secondsToMMSS = (seconds) => {
@@ -43,6 +44,7 @@ export default function Song(props) {
       <td><img id="user-song-img" src={imageUrl} /></td>
       <td>{title}</td>
       <td>{artist}</td>
+      <td>{genre}</td>
       <td className="player_controls">
         <span style={{display: (currentSong.hash === hash ? 'inline' : 'none')}}>
           { secondsToMMSS(audioTime) } &nbsp;

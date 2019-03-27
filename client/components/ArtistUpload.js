@@ -65,11 +65,11 @@ class ArtistUpload extends Component {
       30,
       `    Song Name : ${this.state.songName}
 
-    Song Upload Hash: 
+    Song Upload Hash:
     ${this.state.ipfsHash}
-    Contract Address: 
+    Contract Address:
     ${this.state.ethAddress}
-    Transaction: 
+    Transaction:
     ${this.state.transactionHash}`
     );
 

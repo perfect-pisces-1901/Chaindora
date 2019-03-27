@@ -149,6 +149,7 @@ class AllSongs extends Component {
               <th>Title</th>
               <th>Artist</th>
               <th>Genre</th>
+              <th />
             </tr>
             {this.props.songs.map(song => {
               return (
