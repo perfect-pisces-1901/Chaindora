@@ -149,7 +149,6 @@ export default class AudioRecorder extends React.Component {
         }
         </section>
         <Snackbar
-          bodyStyle={{ backgroundColor: 'red'}}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
