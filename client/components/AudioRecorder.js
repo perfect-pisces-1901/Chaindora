@@ -54,7 +54,9 @@ export default class AudioRecorder extends React.Component {
   }
 
   deleteClipBtn(clipId) {
+    if (confirm("Are you sure you want to delete this clip?")) {
     this.setState((prevState) => ({...prevState, clips: prevState.clips.filter(c => c.id !== clipId)}))
+    }
   }
 
   uploadClipBtn(clipId) {
