@@ -4,6 +4,7 @@ import storehash from '../../src/storehash';
 import ipfs from '../../src/ipfs';
 import web3 from '../../src/web3';
 import axios from 'axios';
+import Canvas from './Canvas'
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -115,6 +116,7 @@ export default class AudioRecorder extends React.Component {
               <article key={clip.id} className="clip">
                 <audio controls={true} src={clip.url} />
                 <p className="clipLabel">{clip.name}</p>
+                <Canvas />
                 <button type="button" className="delete" onClick={() => this.deleteClipBtn(clip.id)}>
                   Delete
                 </button>
