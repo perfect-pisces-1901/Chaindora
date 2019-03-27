@@ -4,6 +4,7 @@ import storehash from '../../src/storehash';
 import ipfs from '../../src/ipfs';
 import web3 from '../../src/web3';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -13,9 +14,12 @@ export default class AudioRecorder extends React.Component {
       ipfsHash: '',
       transactionHash: '',
       record: false,
-      clips: []
+      clips: [],
+      recorded: [],
+      open: false
     }
     this.onStop = this.onStop.bind(this)
+    this.handleClose = this.handleClose.bind(this)
     this.deleteClipBtn = this.deleteClipBtn.bind(this)
     this.uploadClipBtn = this.uploadClipBtn.bind(this)
     this.uploadClipToCloud = this.uploadClipToCloud.bind(this)
@@ -23,7 +27,8 @@ export default class AudioRecorder extends React.Component {
 
   startRecording = () => {
     this.setState({
-      record: true
+      record: true,
+      open: true
     });
   }
 
@@ -49,12 +54,15 @@ export default class AudioRecorder extends React.Component {
   }
 
   deleteClipBtn(clipId) {
+    if (confirm("Are you sure you want to delete this clip?")) {
     this.setState((prevState) => ({...prevState, clips: prevState.clips.filter(c => c.id !== clipId)}))
+    }
   }
 
-  uploadClipBtn(clipId) {
+  async uploadClipBtn(clipId) {
     const clip = this.state.clips.find(c => c.id === clipId)
     console.log('uploadClip ', clip, clip.blob)
+    await this.setState((prevState) => ({...prevState, recorded: [...prevState.recorded, clip.id]}))
     const reader = new FileReader()
     reader.onload = async () => {
       const buffer = await Buffer.from(reader.result)
@@ -95,37 +103,64 @@ export default class AudioRecorder extends React.Component {
 
   }
 
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   render() {
     return (
-      <div>
+      <div id="record-div">
+        <h1 id="record-title">Let&lsquo;s Record!</h1>
         <ReactMic
           record={this.state.record}
           className="sound-wave"
           onStop={this.onStop}
           onData={this.onData}
-          strokeColor="#000000"
-        /> {/*backgroundColor="#FF4081"*/}
-        <button onClick={this.startRecording} type="button">Start</button>
-        <button onClick={this.stopRecording} type="button">Stop</button>
-
+          strokeColor="#C4F0C5"
+          backgroundColor="#EFF0F4"
+        />
+        <div>
+          <button disabled={this.state.record} className="start" onClick={this.startRecording} type="button">Record</button>
+          <button disabled={!this.state.record} className="stop" onClick={this.stopRecording} type="button">Stop</button>
+        </div>
         <section className="sound-clips">
+        <div id="your-clips">
+          <h2>Your clips:</h2>
+        </div>
         {
-          this.state.clips.map(clip => {
+          this.state.clips.map((clip, idx) => {
             return (
               <article key={clip.id} className="clip">
-                <audio controls={true} src={clip.url} />
-                <p className="clipLabel">{clip.name}</p>
+                <audio id="record-audio" controls={true} src={clip.url} />
+                <p className="clipLabel">Clip {idx+1}:  {clip.name}</p>
+                <button disabled={this.state.recorded.includes(clip.id)} type="button" className="upload" onClick={() => this.uploadClipBtn(clip.id)}>
+                  Upload
+                </button>
                 <button type="button" className="delete" onClick={() => this.deleteClipBtn(clip.id)}>
                   Delete
-                </button>
-                <button type="button" className="upload" onClick={() => this.uploadClipBtn(clip.id)}>
-                  Upload
                 </button>
               </article>
             )
           })
         }
         </section>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={1000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Recording...</span>}
+        />
       </div>
     );
   }

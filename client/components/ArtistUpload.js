@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import web3 from "../../src/web3";
 import ipfs from "../../src/ipfs";
 import storehash from "../../src/storehash";
-// import { Button } from "reactstrap";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
-// import Typography from '@material-ui/core/Typography'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const buttonStyle = {
   background: "#C4F0C5",
@@ -17,7 +15,6 @@ const buttonStyle = {
   height: 48,
   width: 250,
   padding: "1000 30px",
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
 };
 
 class ArtistUpload extends Component {
@@ -33,7 +30,8 @@ class ArtistUpload extends Component {
       buffer: "",
       ethAddress: "",
       transactionHash: "",
-      txReceipt: ""
+      txReceipt: "",
+      open: false
     };
     this.captureFile = this.captureFile.bind(this);
     this.captureArtwork = this.captureArtwork.bind(this);
@@ -41,6 +39,7 @@ class ArtistUpload extends Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   //Take file input from user
   async captureFile(event) {
@@ -115,7 +114,7 @@ class ArtistUpload extends Component {
         },
         (error, transactionHash) => {
           console.log(error);
-          this.setState({ transactionHash });
+          this.setState({ transactionHash, open: true });
         }
       );
       const song = {
@@ -127,6 +126,15 @@ class ArtistUpload extends Component {
       await axios.post(`/api/songs`, song);
     });
   }
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   render() {
     console.log("IMAGE URL:", this.state.imageUrl)
     return (
@@ -224,6 +232,19 @@ class ArtistUpload extends Component {
             </tbody>
           </table>
         </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.songName} was successfully uploaded</span>}
+        />
       </div>
     );
   }
