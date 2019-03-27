@@ -64,12 +64,20 @@ const songs = [
     ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
   },
   {
+    title: "Adewoyin Blues",
+    artist: "Not David",
+    genre: "Scat",
+    hash: "QmPDwsEycZc4Rm6Ljkmke3F4EHkt4F4ad8tdWz8rNChX5F",
+    imageUrl: "https://cloud.fullstackacademy.com/David-Adewoyin-staff-photo.jpg?mtime=20180919151703",
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
+  },
+  {
     title: "Testy, You Test My Test",
     artist: "Testy McTesterson",
     genre: "Test and Roll",
-    hash: "QmUJ9xJFM1zsYw5hPrijmf4RjgpdbABzC8rW41fDvET1bB",
     imageUrl: "https://i.redd.it/6dft2z5w9cyz.jpg",
-    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6",
+    hash: "QmUJ9xJFM1zsYw5hPrijmf4RjgpdbABzC8rW41fDvET1bB"
   }
 ];
 
