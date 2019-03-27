@@ -3,6 +3,7 @@ import { getSongs } from "../reducers/songsReducer";
 import { connect } from "react-redux";
 import Song from "./Song.js";
 import storehash from "../../src/storehash";
+import web3 from "../../src/web3";
 
 class AllSongs extends Component {
   constructor(props) {
