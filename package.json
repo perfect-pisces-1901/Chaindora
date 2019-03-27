@@ -32,7 +32,10 @@
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
-    "ipfs-api": "^26.1.2",
+
+
+
+
     "jspdf": "^1.5.3",
 
     "ipfs-http-client": "^30.1.0",

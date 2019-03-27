@@ -47,6 +47,7 @@ class ArtistUpload extends Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.downloadpdf = this.downloadpdf.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 

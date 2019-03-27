@@ -92,6 +92,7 @@ form {
   margin-top: 2em;
 }
 
+
 p#songFile {
   width: 300px;
 }
@@ -115,6 +116,7 @@ form#auth {
   margin-left: auto;
   margin-right: auto;
 }
+
 
 #account {
   margin-left: 13em;
@@ -143,3 +145,4 @@ button.MuiButton-containedPrimary-169 {
   color: #fff;
   background-color: #c4f0c5;
 }
+
