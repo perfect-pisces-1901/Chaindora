@@ -12,6 +12,7 @@ export default function Song(props) {
   const title = song.title
   const artist = song.artist
   const hash = song.hash
+  const imageUrl = song.imageUrl
   const uri = `https://gateway.ipfs.io/ipfs/${hash}`
   const secondsToMMSS = (seconds) => {
     seconds = +seconds
@@ -39,6 +40,7 @@ export default function Song(props) {
           />
         )}
       </td>
+      <td><img id="user-song-img" src={imageUrl} /></td>
       <td>{title}</td>
       <td>{artist}</td>
       <td className="player_controls">

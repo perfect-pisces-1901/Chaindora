@@ -1,0 +1,41 @@
+#record-div {
+  display: flex;
+  flex-direction: column;
+}
+
+#record-title {
+  margin-left: 2%;
+}
+
+.start, .upload, .stop, .delete {
+  padding: 1%;
+  margin: 1%;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+
+.start, .upload {
+  background-color: rgba(196, 240, 197, 0.37);
+}
+
+.stop, .delete {
+  background-color: rgba(240, 196, 196, 0.295);
+}
+
+.start:hover, .upload:hover {
+  background-color: #C4F0C5;
+  transition: all linear 0.1s;
+}
+
+.stop:hover, .delete:hover {
+  background-color: rgb(240, 196, 196);
+  transition: all linear 0.1s;
+}
+
+#your-clips {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 2%;
+}
