@@ -114,7 +114,7 @@ export default class AudioRecorder extends React.Component {
   render() {
     return (
       <div id="record-div">
-        <h1 id="record-title">Let's Record!</h1>
+        <h1 id="record-title">Let&lsquo;s Record!</h1>
         <ReactMic
           record={this.state.record}
           className="sound-wave"
