@@ -146,6 +146,7 @@ class AllSongs extends Component {
           <tbody>
             <tr id="titles">
               <th />
+              <th />
               <th>Title</th>
               <th>Artist</th>
               {/* <th>Genre</th> */}

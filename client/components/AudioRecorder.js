@@ -59,10 +59,10 @@ export default class AudioRecorder extends React.Component {
     }
   }
 
-  uploadClipBtn(clipId) {
+  async uploadClipBtn(clipId) {
     const clip = this.state.clips.find(c => c.id === clipId)
     console.log('uploadClip ', clip, clip.blob)
-    this.setState((prevState) => ({...prevState, recorded: [...prevState.recorded, clip.id]}))
+    await this.setState((prevState) => ({...prevState, recorded: [...prevState.recorded, clip.id]}))
     const reader = new FileReader()
     reader.onload = async () => {
       const buffer = await Buffer.from(reader.result)
