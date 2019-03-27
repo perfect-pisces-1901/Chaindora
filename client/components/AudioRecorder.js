@@ -16,7 +16,8 @@ export default class AudioRecorder extends React.Component {
       record: false,
       clips: [],
       recorded: [],
-      open: false
+      recordToast: false,
+      uploadToast: false,
     }
     this.onStop = this.onStop.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -28,7 +29,7 @@ export default class AudioRecorder extends React.Component {
   startRecording = () => {
     this.setState({
       record: true,
-      open: true
+      recordToast: true
     });
   }
 
@@ -100,7 +101,7 @@ export default class AudioRecorder extends React.Component {
       };
       await axios.post(`/api/songs`, song);
     });
-
+    await this.setState({uploadToast: true})
   }
 
   handleClose = (event, reason) => {
@@ -108,7 +109,7 @@ export default class AudioRecorder extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ recordToast: false, uploadToast: false });
   };
 
   render() {
@@ -153,13 +154,26 @@ export default class AudioRecorder extends React.Component {
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.state.open}
-          autoHideDuration={1000}
+          open={this.state.recordToast}
+          autoHideDuration={2000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
           message={<span id="message-id">Recording...</span>}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.uploadToast}
+          autoHideDuration={2000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Your song is uploading...</span>}
         />
       </div>
     );
