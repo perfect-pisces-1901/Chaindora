@@ -5,14 +5,18 @@ import TextField from "@material-ui/core/TextField";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Button from "@material-ui/core/Button";
 import history from "../history";
-import { withRouter } from "react-router-dom";
+
+import { withRouter, Link } from "react-router-dom";
+
+
+
 var ethUtil = require("ethereumjs-util");
 // var sigUtil = require("eth-sig-util");
 var Eth = require("ethjs");
 window.Eth = Eth;
 
 const AuthForm = props => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { name, displayName, handleSubmit, error, isLoggedIn } = props;
   return (
     <div>
       <form onSubmit={ev => handleSubmit(ev, name)} name={name} id="auth">
@@ -41,6 +45,18 @@ const AuthForm = props => {
             </SvgIcon>
           </Button>
         </div>
+        {!isLoggedIn && (
+          <div>
+            {displayName === "Login" && (
+              <div id="account">
+                Don’t have a account? <br />
+                <Link to="/signup" id="signup">
+                  Sign up here!
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
         {error && error.response && <div> {error.response.data} </div>}
       </form>
