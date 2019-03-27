@@ -16,6 +16,8 @@ router.post("/", async (req, res, next) => {
     console.log("***********************hit", req.body);
     // TODO - The body is forwarded from an IPFS API response by the seller app. Change the seller app to send a more nicely formatted body.
     const newSong = await Song.create({
+      artist: req.body.artist,
+      imageUrl: req.body.imageUrl,
       hash: req.body.ipfsHash[0].hash,
       title: req.body.title,
       genre: req.body.genre,

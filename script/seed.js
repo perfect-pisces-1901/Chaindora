@@ -23,7 +23,8 @@ const users = [
     email: "chaindora@test.com",
     isListener: true,
     password: "123",
-    imageUrl: "https://static.boredpanda.com/blog/wp-content/uploads/2014/12/72-year-old-club-dj-ruth-flowers__605.jpg"
+    imageUrl:
+      "https://static.boredpanda.com/blog/wp-content/uploads/2014/12/72-year-old-club-dj-ruth-flowers__605.jpg"
   }
 ];
 
@@ -46,28 +47,32 @@ const songs = [
     title: "Baby, You Float My Duck",
     artist: "Big Daddy Lobo Martinez (aka tschaikovsky)",
     genre: "Classical",
-    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi" // Tschaikovsky Rococco Variations
+    hash: "QmefYTDDyfrm2kcqCXhBTBmc9mCwGkP743VbX2wTXM2xqi", // Tschaikovsky Rococco Variations
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
   },
   {
     title: "Testy Eyes",
     artist: "Testy McTesterson",
     genre: "Test Hop",
     hash: "QmPnEMYHkRN6M7us9xzKtJ8PVNitmiVopnhfQgTxfEqWFJ",
-    imageUrl: "https://i.redd.it/kibbanxp1c2z.jpg"
+    imageUrl: "https://i.redd.it/kibbanxp1c2z.jpg",
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
   },
   {
     title: "Test-time Testasia (theme from Test Bites)",
     artist: "Testy McTesterson",
     genre: "Jazzy Test",
     hash: "	QmYWeyeBPEuTZYFGdWn1KE4YhcjRcSywHf4FrtxbtETQfN",
-    imageUrl: "https://f4.bcbits.com/img/a0240437292_10.jpg"
+    imageUrl: "https://f4.bcbits.com/img/a0240437292_10.jpg",
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
   },
   {
     title: "Testy, You Test My Test",
     artist: "Testy McTesterson",
     genre: "Test and Roll",
     hash: "QmUJ9xJFM1zsYw5hPrijmf4RjgpdbABzC8rW41fDvET1bB",
-    imageUrl: "https://i.redd.it/6dft2z5w9cyz.jpg"
+    imageUrl: "https://i.redd.it/6dft2z5w9cyz.jpg",
+    ethAddress: "0x1a5B3De6De5312762D32749a6af1E9D0791490d6"
   }
 ];
 
