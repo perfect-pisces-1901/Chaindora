@@ -35,7 +35,7 @@ h2 {
   color: #929aab;
   display: flex;
   justify-content: center;
-  margin-bottom: 3em;
+  /* margin-bottom: 3em; */
   font-weight: lighter;
 }
 
@@ -80,7 +80,7 @@ form {
   flex-direction: column;
   border-radius: 8px;
   width: 40%;
-  margin-top: 90px;
+  /* margin-top: 90px; */
   /* margin: 5px auto 5px; */
   margin-left: auto;
   margin-right: auto;
@@ -90,4 +90,31 @@ form {
   margin-left: 15em;
   margin-top: 2em;
 }
+<<<<<<< HEAD
+
+p#songFile {
+  width: 300px;
+}
+
+img#cover-art {
+  margin-bottom: 1em;
+  /* margin-right: 4em; */
+}
+
+#formupload {
+  margin-right: 9em;
+}
+
+form#auth {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  width: 40%;
+  margin-top: 90px;
+  /* margin: 5px auto 5px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+=======
 /*>>>>>>> master*/
+>>>>>>> master

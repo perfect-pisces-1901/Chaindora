@@ -6,12 +6,16 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import Button from "@material-ui/core/Button";
 import history from "../history";
 import { withRouter } from "react-router-dom";
+var ethUtil = require("ethereumjs-util");
+// var sigUtil = require("eth-sig-util");
+var Eth = require("ethjs");
+window.Eth = Eth;
 
 const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
   return (
     <div>
-      <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
+      <form onSubmit={ev => handleSubmit(ev, name)} name={name} id="auth">
         <h1 className="title">Please {displayName}</h1>
         <TextField
           required
@@ -62,6 +66,9 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt, name) {
       evt.preventDefault();
+      if (typeof ethereum !== "undefined") {
+        ethereum.enable();
+      }
       const formName = name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;

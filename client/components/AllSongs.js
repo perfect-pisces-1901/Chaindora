@@ -3,6 +3,7 @@ import { getSongs } from "../reducers/songsReducer";
 import { connect } from "react-redux";
 import Song from "./Song.js";
 import storehash from "../../src/storehash";
+import web3 from "../../src/web3";
 
 const audio = document.createElement("audio");
 let audioVisible = false;
@@ -127,8 +128,9 @@ class AllSongs extends Component {
       audio.play();
       try {
         await this.setState({ currentSong: song, paused: false });
+        const accounts = await web3.eth.getAccounts();
         storehash.methods.payArtist(this.state.currentSong.ethAddress).send({
-          from: "0x57bCe2c9311Dd15A14Fc5df64aDE56F41B2B5009",
+          from: accounts[0],
           value: 10 ** 16
         });
       } catch (error) {
@@ -149,7 +151,7 @@ class AllSongs extends Component {
               <th />
               <th>Title</th>
               <th>Artist</th>
-              {/* <th>Genre</th> */}
+              <th>Genre</th>
             </tr>
             {this.props.songs.map(song => {
               return (

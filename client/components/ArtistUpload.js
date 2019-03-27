@@ -5,7 +5,11 @@ import storehash from "../../src/storehash";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Snackbar from '@material-ui/core/Snackbar'
+
+import { withStyles } from "@material-ui/core/styles";
+// import Typography from '@material-ui/core/Typography'
+import jspdf from "jspdf";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const buttonStyle = {
   background: "#C4F0C5",
@@ -14,19 +18,22 @@ const buttonStyle = {
   color: "white",
   height: 48,
   width: 250,
-  padding: "1000 30px",
+  padding: "1000 30px"
 };
+
+const pdf = new jspdf();
 
 class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
+      artist: "",
       songName: "",
       genre: "",
       songFile: "",
       imageUrl:
         "https://www.shazam.com/resources/6a70bd6acae5578760b35e54e0d1e943d7579ae7/nocoverart.jpg",
-      ipfsHash: null,
+      ipfsHash: "",
       buffer: "",
       ethAddress: "",
       transactionHash: "",
@@ -39,8 +46,37 @@ class ArtistUpload extends Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.downloadpdf = this.downloadpdf.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
+
+  downloadpdf() {
+    pdf.setFontSize(22);
+    pdf.text(
+      10,
+      10,
+      `
+                             Your Upload Receipt`
+    );
+    pdf.setFontSize(16);
+    pdf.text(
+      10,
+      30,
+      `    Song Name : ${this.state.songName}
+
+    Song Upload Hash: 
+    ${this.state.ipfsHash}
+    Contract Address: 
+    ${this.state.ethAddress}
+    Transaction: 
+    ${this.state.transactionHash}`
+    );
+
+    pdf.setTextColor(100);
+    // pdf.addImage(this.state.imageUrl, "JPG", 80, 40, 50, 50);
+    pdf.save("Transaction_Receipt");
+  }
+
   //Take file input from user
   async captureFile(event) {
     event.stopPropagation();
@@ -119,6 +155,8 @@ class ArtistUpload extends Component {
       );
       const song = {
         ipfsHash,
+        artist: this.state.artist,
+        imageUrl: this.state.imageUrl,
         title: this.state.songName,
         genre: this.state.genre,
         ethAddress: accounts[0]
@@ -128,7 +166,7 @@ class ArtistUpload extends Component {
   }
 
   handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -136,7 +174,7 @@ class ArtistUpload extends Component {
   };
 
   render() {
-    console.log("IMAGE URL:", this.state.imageUrl)
+    console.log("IMAGE URL:", this.state.imageUrl);
     return (
       <div className="App">
         <div id="artistform">
@@ -149,13 +187,21 @@ class ArtistUpload extends Component {
                     <TextField
                       required
                       type="text"
+                      name="artist"
+                      id="standard-name"
+                      label="Artist Name"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <TextField
+                      required
+                      type="text"
                       name="songName"
                       id="standard-name"
                       label="Song Title"
                       margin="normal"
                       onChange={this.onChange}
                     />
-                    <br />
                     <TextField
                       required
                       type="text"
@@ -179,22 +225,37 @@ class ArtistUpload extends Component {
                         </Button>
                       </label>
                       <br />
-                      <p>{this.state.songFile}</p>
+                      <p id="songFile">{this.state.songFile}</p>
                       <input
                         id="uploadAlbumArtwork"
                         type="file"
                         style={{ display: "none" }}
                         onChange={this.captureArtwork}
                       />
-                      <label htmlFor="uploadAlbumArtwork">
-                        <Button style={buttonStyle} component="span">
-                          Upload Album Artwork
+                      <br />
+                      <label htmlFor="SendToBlockchain">
+                        <Button
+                          style={buttonStyle}
+                          type="submit"
+                          disabled={!this.state.songFile}
+                        >
+                          Send it
                         </Button>
                       </label>
+                      <br />
+                      <p>
+                        <label htmlFor="TransactionReceipt">
+                          <Button
+                            style={buttonStyle}
+                            onClick={this.downloadpdf}
+                            disabled={!this.state.transactionHash}
+                          >
+                            {" "}
+                            Get Transaction Receipt{" "}
+                          </Button>
+                        </label>
+                      </p>
                     </div>
-                    <Button bsstyle="primary" type="submit">
-                      Send it
-                    </Button>
                   </form>
                 </div>
               </div>
@@ -202,48 +263,30 @@ class ArtistUpload extends Component {
             <div id="formcoverart">
               <p>Cover Art Preview</p>
               <img id="cover-art" src={this.state.imageUrl} />
+              <label htmlFor="uploadAlbumArtwork">
+                <Button style={buttonStyle} component="span">
+                  Upload Album Artwork
+                </Button>
+              </label>
             </div>
           </div>
-          <hr />
-          <Button style={buttonStyle} onClick={this.onClick}>
-            {" "}
-            Get Transaction Receipt{" "}
-          </Button>
-          <hr />
-          <table bordered="true" responsive="true">
-            <thead>
-              <tr>
-                <th>Your Upload Receipt</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Song Upload Hash:</td>
-                <td>{this.state.ipfsHash}</td>
-              </tr>
-              <tr>
-                <td>Contract Address:</td>
-                <td>{this.state.ethAddress}</td>
-              </tr>
-              <tr>
-                <td>Transaction:</td>
-                <td>{this.state.transactionHash}</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left"
           }}
           open={this.state.open}
           autoHideDuration={6000}
           onClose={this.handleClose}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            "aria-describedby": "message-id"
           }}
-          message={<span id="message-id">{this.state.songName} was successfully uploaded</span>}
+          message={
+            <span id="message-id">
+              {this.state.songName} was successfully uploaded
+            </span>
+          }
         />
       </div>
     );
