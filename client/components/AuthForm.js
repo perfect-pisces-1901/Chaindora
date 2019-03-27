@@ -15,7 +15,7 @@ const AuthForm = props => {
   const { name, displayName, handleSubmit, error } = props;
   return (
     <div>
-      <form onSubmit={ev => handleSubmit(ev, name)} name={name}>
+      <form onSubmit={ev => handleSubmit(ev, name)} name={name} id="auth">
         <h1 className="title">Please {displayName}</h1>
         <TextField
           required

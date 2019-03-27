@@ -27,6 +27,7 @@ class ArtistUpload extends Component {
   constructor() {
     super();
     this.state = {
+      artist: "",
       songName: "",
       genre: "",
       songFile: "",
@@ -152,6 +153,8 @@ class ArtistUpload extends Component {
       );
       const song = {
         ipfsHash,
+        artist: this.state.artist,
+        imageUrl: this.state.imageUrl,
         title: this.state.songName,
         genre: this.state.genre,
         ethAddress: accounts[0]
@@ -174,13 +177,21 @@ class ArtistUpload extends Component {
                     <TextField
                       required
                       type="text"
+                      name="artist"
+                      id="standard-name"
+                      label="Artist Name"
+                      margin="normal"
+                      onChange={this.onChange}
+                    />
+                    <TextField
+                      required
+                      type="text"
                       name="songName"
                       id="standard-name"
                       label="Song Title"
                       margin="normal"
                       onChange={this.onChange}
                     />
-                    <br />
                     <TextField
                       required
                       type="text"
@@ -204,22 +215,37 @@ class ArtistUpload extends Component {
                         </Button>
                       </label>
                       <br />
-                      <p>{this.state.songFile}</p>
+                      <p id="songFile">{this.state.songFile}</p>
                       <input
                         id="uploadAlbumArtwork"
                         type="file"
                         style={{ display: "none" }}
                         onChange={this.captureArtwork}
                       />
-                      <label htmlFor="uploadAlbumArtwork">
-                        <Button style={buttonStyle} component="span">
-                          Upload Album Artwork
+                      <br />
+                      <label htmlFor="SendToBlockchain">
+                        <Button
+                          style={buttonStyle}
+                          type="submit"
+                          disabled={!this.state.songFile}
+                        >
+                          Send it
                         </Button>
                       </label>
+                      <br />
+                      <p>
+                        <label htmlFor="TransactionReceipt">
+                          <Button
+                            style={buttonStyle}
+                            onClick={this.downloadpdf}
+                            disabled={!this.state.transactionHash}
+                          >
+                            {" "}
+                            Get Transaction Receipt{" "}
+                          </Button>
+                        </label>
+                      </p>
                     </div>
-                    <Button bsstyle="primary" type="submit">
-                      Send it
-                    </Button>
                   </form>
                 </div>
               </div>
@@ -227,35 +253,13 @@ class ArtistUpload extends Component {
             <div id="formcoverart">
               <p>Cover Art Preview</p>
               <img id="cover-art" src={this.state.imageUrl} />
+              <label htmlFor="uploadAlbumArtwork">
+                <Button style={buttonStyle} component="span">
+                  Upload Album Artwork
+                </Button>
+              </label>
             </div>
           </div>
-          <hr />
-          <Button style={buttonStyle} onClick={this.downloadpdf}>
-            {" "}
-            Get Transaction Receipt{" "}
-          </Button>
-          <hr />
-          <table bordered="true" responsive="true">
-            <thead>
-              <tr>
-                <th>Your Upload Receipt</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Song Upload Hash:</td>
-                <td>{this.state.ipfsHash}</td>
-              </tr>
-              <tr>
-                <td>Contract Address:</td>
-                <td>{this.state.ethAddress}</td>
-              </tr>
-              <tr>
-                <td>Transaction:</td>
-                <td>{this.state.transactionHash}</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     );
