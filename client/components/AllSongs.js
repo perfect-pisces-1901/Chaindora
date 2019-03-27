@@ -5,72 +5,6 @@ import Song from "./Song.js";
 import storehash from "../../src/storehash";
 import web3 from "../../src/web3";
 
-const audio = document.createElement("audio");
-let audioVisible = false;
-let audioCtx;
-let bufferLength;
-let analyser;
-const HEIGHT = window.innerHeight;
-const WIDTH = window.innerWidth;
-let canvasCtx;
-let canvas;
-
-function setupAudio() {
-  if (!audioCtx) {
-    audioCtx = new AudioContext();
-    analyser = audioCtx.createAnalyser();
-    audio.crossOrigin = "anonymous";
-    const source = audioCtx.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    analyser.fftSize = 32768;
-    // analyser.fftSize = 256;
-    bufferLength = analyser.frequencyBinCount;
-    canvas = document.getElementById("canvas");
-    canvasCtx = canvas.getContext("2d");
-    drawVisualizerFrame();
-  }
-}
-
-function drawVisualizerFrame() {
-  // eslint-disable-next-line no-unused-vars
-  requestAnimationFrame(drawVisualizerFrame);
-  const dataArray = new Uint8Array(bufferLength);
-  analyser.getByteTimeDomainData(dataArray);
-  canvasCtx.fillStyle = "#eff0f4";
-  canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-  // var barWidth = (WIDTH / bufferLength) * 2.5;
-  // var barHeight;
-  // var x = 0;
-  // for (let i = 0; i < bufferLength; i++) {
-  //   barHeight = dataArray[i] / 2;
-
-  //   canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
-  //   canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
-
-  //   x += barWidth + 1;
-  // }
-  canvasCtx.lineWidth = 4;
-  canvasCtx.strokeStyle = "#c4f0c5";
-  canvasCtx.beginPath();
-  const sliceWidth = (WIDTH * 1.0) / bufferLength;
-  let x = 0;
-  for (let i = 0; i < bufferLength; i++) {
-    const v = dataArray[i] / 128.0;
-    const y = (v * HEIGHT) / 2;
-
-    if (i === 0) {
-      canvasCtx.moveTo(x, y + 100);
-    } else {
-      canvasCtx.lineTo(x, y + 100);
-    }
-
-    x += sliceWidth;
-  }
-  canvasCtx.lineTo(canvas.width, canvas.height / 2);
-  canvasCtx.stroke();
-}
-
 class AllSongs extends Component {
   constructor(props) {
     super(props);
@@ -82,50 +16,113 @@ class AllSongs extends Component {
     };
     this.togglePlay = this.togglePlay.bind(this);
     this.onInput = this.onInput.bind(this);
+    this.setupAudio = this.setupAudio.bind(this);
+    this.drawVisualizerFrame = this.drawVisualizerFrame.bind(this);
+    this.resizeCanvas = this.resizeCanvas.bind(this)
+    this.audioCtx = new AudioContext();
+    this.analyser = this.audioCtx.createAnalyser();
+    this.source = {};
+    // this.canvas = document.getElementById('canvas');
+    // this.canvasCtx = this.refs.canvas.getContext('2d');
+    // this.audioRef = React.createRef()
   }
-
   componentDidMount() {
     this.props.getSongs();
-    audio.addEventListener("durationchange", () => {
-      const duration = parseInt(audio.duration, 10);
-      this.setState({ audioDuration: duration });
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      const time = parseInt(audio.currentTime, 10);
-      this.setState({ audioTime: time });
+    this.refs.audio.addEventListener('durationchange', () => {
+      const duration = parseInt(this.refs.audio.duration, 10);
+      this.setState({ audioDuration: duration })
+    })
+    this.refs.audio.addEventListener('timeupdate', () => {
+      const time = parseInt(this.refs.audio.currentTime, 10);
+      this.setState({ audioTime: time })
       if (this.state.currentSong.hash) {
         const slider = document.getElementById(
           `playback_control_${this.state.currentSong.hash}`
         );
         slider.value = time;
       }
-    });
+    })
+    this.refs.canvas.addEventListener('resize', this.resizeCanvas, false)
+    this.canvasCtx = this.refs.canvas.getContext('2d');
   }
-
-  onInput(ev) {
-    audio.currentTime = ev.target.value;
-    this.setState({ audioTime: ev.target.value });
+  resizeCanvas() {
+    this.refs.canvas.width = window.innerWidth
+    this.refs.canvas.height = window.innerHeight
   }
-
-  async togglePlay(ev, song, uri) {
-    setupAudio();
-    if (!audioVisible) {
-      audioVisible = true;
-      document.getElementsByTagName("body")[0].appendChild(audio);
+  setupAudio() {
+    // let audioVisible = false;
+      // const audioCtx = new AudioContext();
+      // const analyser = audioCtx.createAnalyser();
+      this.refs.audio.crossOrigin = 'anonymous';
+      // let source = this.audioCtx.createMediaElementSource(this.refs.audio);
+      // let source;
+      console.log('SOURCE IS: ', this.source)
+      if (!this.source.channelCount) {
+        console.log('SOURCE HAS NO CHANNEL COUNT')
+        this.source = this.audioCtx.createMediaElementSource(this.refs.audio)
+      } else {
+        console.log('RYANNNNNN')
+        this.source.disconnect()
+        console.log('NEW SOURCE: ', this.source)
+        // source = this.audioCtx.createMediaElementSource(this.refs.audio)
+      }
+      // if no mediaSrcElment create
+      // else find way to update or reassing to includethis.refs.audio
+      this.source.connect(this.analyser);
+      this.analyser.connect(this.audioCtx.destination)
+      this.analyser.fftSize = 32768;
+      const bufferLength = this.analyser.frequencyBinCount;
+      // const canvas = document.getElementById('canvas');
+      // const canvasCtx = canvas.getContext('2d');
+      this.drawVisualizerFrame(bufferLength, this.analyser, this.canvasCtx, this.refs.canvas)
+  }
+  drawVisualizerFrame(bufferLength, analyser, canvasCtx, canvas) {
+    // eslint-disable-next-line no-unused-vars
+    requestAnimationFrame(() => this.drawVisualizerFrame(bufferLength, analyser, canvasCtx, canvas));
+    const dataArray = new Uint8Array(bufferLength);
+    analyser.getByteTimeDomainData(dataArray);
+    canvasCtx.fillStyle = '#eff0f4'
+    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+    canvasCtx.lineWidth = 4;
+    canvasCtx.strokeStyle = '#c4f0c5';
+    canvasCtx.beginPath();
+    const sliceWidth = canvas.width * 1.0 / bufferLength;
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      const v = dataArray[i] / 128.0;
+      const y = v * canvas.height;
+      if (i === 0) {
+        canvasCtx.moveTo(x, y);
+      } else {
+        canvasCtx.lineTo(x, y);
+      }
+      x += sliceWidth;
     }
+    canvasCtx.lineTo(canvas.width, canvas.height / 2);
+    canvasCtx.stroke();
+  }
+  onInput(ev) {
+    this.refs.audio.currentTime = ev.target.value
+    this.setState({ audioTime: ev.target.value })
+  }
+  async togglePlay(ev, song, uri) {
+    this.setupAudio()
+    // if (!audioVisible) {
+    //   audioVisible = true
+    //   document.getElementsByTagName('body')[0].appendChild(audio)
+    // }
     if (this.state.currentSong.id && this.state.currentSong.id === song.id) {
-      if (audio.paused) {
-        audio.play();
+      if (this.refs.audio.paused) {
+        this.refs.audio.play();
         this.setState({ paused: false });
       } else {
-        audio.pause();
+        this.refs.audio.pause();
         this.setState({ paused: true });
       }
     } else {
-      audio.src = uri;
-      audio.load();
-      audio.play();
+      this.refs.audio.src = uri;
+      this.refs.audio.load();
+      this.refs.audio.play();
       try {
         await this.setState({ currentSong: song, paused: false });
         const accounts = await web3.eth.getAccounts();
@@ -138,11 +135,11 @@ class AllSongs extends Component {
       }
     }
   }
-
   render() {
     return (
       <div>
-        <canvas height={HEIGHT} width={WIDTH} id="canvas" ref="canvas" />
+        <audio controls={false} ref='audio' />
+        <canvas height='300' width='300' id="canvas" ref="canvas" />
         <h2>Chaindora Catalog</h2>
         <table id="songs">
           <tbody>
@@ -169,6 +166,7 @@ class AllSongs extends Component {
             })}
           </tbody>
         </table>
+        <audio id='myAudio' />
       </div>
     );
   }
