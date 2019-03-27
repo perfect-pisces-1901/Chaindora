@@ -4,6 +4,7 @@ import storehash from '../../src/storehash';
 import ipfs from '../../src/ipfs';
 import web3 from '../../src/web3';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -13,9 +14,12 @@ export default class AudioRecorder extends React.Component {
       ipfsHash: '',
       transactionHash: '',
       record: false,
-      clips: []
+      clips: [],
+      recorded: [],
+      open: false
     }
     this.onStop = this.onStop.bind(this)
+    this.handleClose = this.handleClose.bind(this)
     this.deleteClipBtn = this.deleteClipBtn.bind(this)
     this.uploadClipBtn = this.uploadClipBtn.bind(this)
     this.uploadClipToCloud = this.uploadClipToCloud.bind(this)
@@ -23,7 +27,8 @@ export default class AudioRecorder extends React.Component {
 
   startRecording = () => {
     this.setState({
-      record: true
+      record: true,
+      open: true
     });
   }
 
@@ -55,6 +60,7 @@ export default class AudioRecorder extends React.Component {
   uploadClipBtn(clipId) {
     const clip = this.state.clips.find(c => c.id === clipId)
     console.log('uploadClip ', clip, clip.blob)
+    this.setState((prevState) => ({...prevState, recorded: [...prevState.recorded, clip.id]}))
     const reader = new FileReader()
     reader.onload = async () => {
       const buffer = await Buffer.from(reader.result)
@@ -95,10 +101,18 @@ export default class AudioRecorder extends React.Component {
 
   }
 
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   render() {
     return (
       <div id="record-div">
-        <h1>Let's Record!</h1>
+        <h1 id="record-title">Let's Record!</h1>
         <ReactMic
           record={this.state.record}
           className="sound-wave"
@@ -108,27 +122,44 @@ export default class AudioRecorder extends React.Component {
           backgroundColor="#EFF0F4"
         />
         <div>
-          <button className="start" onClick={this.startRecording} type="button">Record</button>
-          <button className="stop" onClick={this.stopRecording} type="button">Stop</button>
+          <button disabled={this.state.record} className="start" onClick={this.startRecording} type="button">Record</button>
+          <button disabled={!this.state.record} className="stop" onClick={this.stopRecording} type="button">Stop</button>
         </div>
         <section className="sound-clips">
+        <div id="your-clips">
+          <h2>Your clips:</h2>
+        </div>
         {
-          this.state.clips.map(clip => {
+          this.state.clips.map((clip, idx) => {
             return (
               <article key={clip.id} className="clip">
                 <audio id="record-audio" controls={true} src={clip.url} />
-                <p className="clipLabel">{clip.name}</p>
+                <p className="clipLabel">Clip {idx+1}:  {clip.name}</p>
+                <button disabled={this.state.recorded.includes(clip.id)} type="button" className="upload" onClick={() => this.uploadClipBtn(clip.id)}>
+                  Upload
+                </button>
                 <button type="button" className="delete" onClick={() => this.deleteClipBtn(clip.id)}>
                   Delete
-                </button>
-                <button type="button" className="upload" onClick={() => this.uploadClipBtn(clip.id)}>
-                  Upload
                 </button>
               </article>
             )
           })
         }
         </section>
+        <Snackbar
+          bodyStyle={{ backgroundColor: 'red'}}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={1000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Recording...</span>}
+        />
       </div>
     );
   }

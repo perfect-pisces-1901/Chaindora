@@ -1,7 +1,10 @@
 #record-div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+#record-title {
+  margin-left: 2%;
 }
 
 .start, .upload, .stop, .delete {
@@ -9,9 +12,16 @@
   margin: 1%;
   border-radius: 10px;
   border: none;
-  background: none;
   outline: none;
   font-size: 1em;
+}
+
+.start, .upload {
+  background-color: rgba(196, 240, 197, 0.37);
+}
+
+.stop, .delete {
+  background-color: rgba(240, 196, 196, 0.295);
 }
 
 .start:hover, .upload:hover {
@@ -22,4 +32,10 @@
 .stop:hover, .delete:hover {
   background-color: rgb(240, 196, 196);
   transition: all linear 0.1s;
+}
+
+#your-clips {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 2%;
 }
