@@ -97,23 +97,26 @@ export default class AudioRecorder extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="record-div">
+        <h1>Let's Record!</h1>
         <ReactMic
           record={this.state.record}
           className="sound-wave"
           onStop={this.onStop}
           onData={this.onData}
-          strokeColor="#000000"
-        /> {/*backgroundColor="#FF4081"*/}
-        <button onClick={this.startRecording} type="button">Start</button>
-        <button onClick={this.stopRecording} type="button">Stop</button>
-
+          strokeColor="#C4F0C5"
+          backgroundColor="#EFF0F4"
+        />
+        <div>
+          <button className="start" onClick={this.startRecording} type="button">Record</button>
+          <button className="stop" onClick={this.stopRecording} type="button">Stop</button>
+        </div>
         <section className="sound-clips">
         {
           this.state.clips.map(clip => {
             return (
               <article key={clip.id} className="clip">
-                <audio controls={true} src={clip.url} />
+                <audio id="record-audio" controls={true} src={clip.url} />
                 <p className="clipLabel">{clip.name}</p>
                 <button type="button" className="delete" onClick={() => this.deleteClipBtn(clip.id)}>
                   Delete

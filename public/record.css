@@ -1,0 +1,25 @@
+#record-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.start, .upload, .stop, .delete {
+  padding: 1%;
+  margin: 1%;
+  border-radius: 10px;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 1em;
+}
+
+.start:hover, .upload:hover {
+  background-color: #C4F0C5;
+  transition: all linear 0.1s;
+}
+
+.stop:hover, .delete:hover {
+  background-color: rgb(240, 196, 196);
+  transition: all linear 0.1s;
+}
