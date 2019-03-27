@@ -98,3 +98,31 @@ form#auth {
   margin-left: auto;
   margin-right: auto;
 }
+
+#account {
+  margin-left: 13em;
+  margin-top: 2em;
+}
+
+a#signup {
+  margin-top: 1em;
+}
+
+a#signup:hover {
+  border-radius: 10px;
+  background-color: #c4f0c5;
+}
+
+button.MuiButton-containedPrimary-65 {
+  color: #fff;
+  background-color: #c4f0c5;
+}
+
+button.MuiButton-containedPrimary-65:hover {
+  background-color: #c4f0c5;
+}
+
+button.MuiButton-containedPrimary-169 {
+  color: #fff;
+  background-color: #c4f0c5;
+}

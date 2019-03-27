@@ -46,7 +46,11 @@ class HomePage extends Component {
           </p>
           <p
             className="user-button"
-            onClick={() => this.props.history.push("/songs")}
+            onClick={
+              isLoggedIn
+                ? () => this.props.history.push("/songs")
+                : () => this.props.history.push("/login")
+            }
           >
             Listen
             {/* <Link className='user-link' to="/songs">Listen</Link> */}
