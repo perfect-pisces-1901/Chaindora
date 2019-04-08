@@ -16,7 +16,7 @@ against capturing the stream and making trivial content modifications
 to bypass the hash. This project is just a sketch-of-concept!
 
 ## Installation
-
+  - Make sure you have the MetaMask extension in your browser and create an account if don't have one
   - npm install
   - npm run seed
   - npm start
