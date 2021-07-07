@@ -4,6 +4,7 @@ const Song = require("../server/db/models/Song");
 const User = require("../server/db/models/User");
 const Album = require("../server/db/models/Album");
 const Playlist = require("../server/db/models/Playlist");
+const moreSongs = require('./first_lines');
 
 const users = [
   {
@@ -22,7 +23,7 @@ const users = [
   }
 ];
 
-const songs = [
+let songs = [
   {
     title: "Liquid Eyes",
     artist: "Leo LePuq (aka Vivaldi)",
@@ -80,6 +81,8 @@ const songs = [
     hash: "QmUJ9xJFM1zsYw5hPrijmf4RjgpdbABzC8rW41fDvET1bB"
   }
 ];
+
+songs = [...songs, ...moreSongs];
 
 const seed = () =>
   Promise.all(
